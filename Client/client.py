@@ -3,10 +3,11 @@ import requests
 import psutil
 import socket
 import platform
-from typing import List
 import time
+from typing import List
 
-UPDATE_INTERVAL = 30  # in seconds
+CUSTOM_NAME = "AG2"
+UPDATE_INTERVAL = 30  # Update interval in seconds
 
 class User:
     def __init__(self, username, fullname, logged, login_time):
@@ -16,12 +17,11 @@ class User:
         self.login_time = login_time
 
 class ClientUpdate:
-    def __init__(self, custom_name, hostname, ip_addresses, os, os_version, total_memory, used_memory, cpu_usage, disk_size, disk_used, users: List[User]):
+    def __init__(self, custom_name, hostname, ip_addresses, os, total_memory, used_memory, cpu_usage, disk_size, disk_used, users: List[User]):
         self.customName = custom_name
         self.hostname = hostname
         self.ipAddresses = ip_addresses
         self.os = os
-        self.os_version = os_version
         self.total_memory = total_memory
         self.used_memory = used_memory
         self.cpu_usage = cpu_usage
@@ -52,32 +52,34 @@ def get_cpu_usage():
     return psutil.cpu_percent(interval=1)
 
 def get_os_info():
-    os_name = platform.system()
-    os_version = platform.version()
-    return os_name, os_version
+    return platform.system() + " " + platform.release() + " "
 
-users = [
-    User("pippo", "Pippo Pluto", False, "2018-01-01 00:00:00"),
-    User("pollo", "Pollo Amadori", False, "2018-01-02 00:00:00"),
-    User("Manzoni", "Alessandro Manzoni", True, "2018-01-03 12:33:00")
-]
+def get_logged_in_users():
+    users = []
+    for user in psutil.users():
+        username = user.name
+        fullname = username  # Using username as fullname for simplicity
+        logged = True
+        login_time = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(user.started))
+        users.append(User(username, fullname, logged, login_time))
+    return users
 
 url = "http://localhost:8080/client_update"
 
 while True:
     hostname = socket.gethostname()
     ip_addresses = get_ip_addresses()
-    os_name, os_version = get_os_info()
+    os_name = get_os_info()
     total_memory, used_memory = get_memory_info()
     cpu_usage = get_cpu_usage()
     disk_size, disk_used = get_disk_info()
+    users = get_logged_in_users()
 
     client_update = ClientUpdate(
-        custom_name="AG2",
+        custom_name=CUSTOM_NAME,
         hostname=hostname,
         ip_addresses=ip_addresses,
         os=os_name,
-        os_version=os_version,
         total_memory=total_memory,
         used_memory=used_memory,
         cpu_usage=cpu_usage,
@@ -91,9 +93,8 @@ while True:
     response = requests.post(url, data=json_data, headers={"Content-Type": "application/json"})
 
     if response.status_code == 200:
-        print("Dati inviati con successo!")
+        print("Data successfully sent!")
     else:
-        print(f"Errore nell'invio: {response.status_code}")
+        print(f"Error sending data: {response.status_code}")
 
-    # Attendere prima di eseguire un nuovo aggiornamento
     time.sleep(UPDATE_INTERVAL)

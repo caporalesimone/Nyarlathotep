@@ -4,82 +4,100 @@ body {
     padding: 0;
     background-color: #f4f4f4;
 }
+
 h1 {
     text-align: center;
-    padding: 20px;
+    padding: 16px; /* Ridotto rispetto a 20px */
     background-color: #4CAF50;
     color: white;
     margin: 0;
+    font-size: 20px; /* Ridotto il font-size per rendere il titolo più compatto */
 }
+
 .grid-container {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 16px;
-    padding: 16px;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Ridotto il minmax per una griglia più compatta */
+    gap: 12px; /* Ridotto il gap per accorciare lo spazio tra le card */
+    padding: 12px; /* Ridotto il padding per accorciare lo spazio interno */
 }
+
 .card {
     background: white;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 16px;
+    border-radius: 6px; /* Ridotto il border-radius per rendere le card più compatte */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Ridotto l'ombra per un aspetto più leggero */
+    padding: 12px; /* Ridotto il padding interno per contenere meglio il contenuto */
     display: flex;
     flex-direction: column;
 }
+
 .card h2 {
     margin-top: 0;
     color: #333;
+    font-size: 16px; /* Ridotto il font-size per un titolo della card più compatto */
 }
+
 .card p {
-    margin: 8px 0;
+    margin: 4px 0; /* Ridotto il margine per ridurre lo spazio tra i paragrafi */
     color: #555;
+    font-size: 14px; /* Ridotto il font-size per i paragrafi */
 }
+
 .card pre {
     background-color: #eee;
     border-radius: 4px;
-    padding: 8px;
+    padding: 6px; /* Ridotto il padding per un aspetto più compatto */
     overflow-x: auto;
+    font-size: 13px; /* Ridotto il font-size per il testo preformattato */
 }
+
 .user-table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 16px;
+    margin-top: 12px; /* Ridotto il margine superiore */
 }
+
 .user-table th, .user-table td {
-    padding: 8px;
+    padding: 6px; /* Ridotto il padding per accorciare le celle della tabella */
     border: 1px solid #ddd;
     text-align: left;
+    font-size: 14px; /* Ridotto il font-size per la tabella */
 }
+
 .user-table th {
     background-color: #f2f2f2;
 }
+
 .logged {
     background-color: #f8d7da;
     font-weight: bold;
+    font-size: 14px; /* Ridotto il font-size per il testo evidenziato */
 }
 
 .info-group p {
-    margin-bottom: 4px;
+    margin-bottom: 2px; /* Ridotto il margine inferiore */
+    font-size: 13px; /* Ridotto il font-size per le informazioni di gruppo */
 }
 
 .progress-bar-container {
     display: flex;
     align-items: center;
-    margin-top: 8px;
+    margin-top: 6px; /* Ridotto il margine superiore */
 }
 
 .progress-bar-label {
-    width: 60px;
+    width: 50px; /* Ridotto la larghezza per una visualizzazione più compatta */
     text-align: left;
     font-weight: bold;
     color: #333;
-    margin-right: 8px;
+    margin-right: 6px; /* Ridotto il margine destro */
+    font-size: 13px; /* Ridotto il font-size per le etichette delle barre di progresso */
 }
 
 .progress-bar {
     background-color: #ddd;
     border-radius: 4px;
     overflow: hidden;
-    height: 20px;
+    height: 16px; /* Ridotto l'altezza per una barra di progresso più compatta */
     flex-grow: 1;
     position: relative;
 }
@@ -106,12 +124,13 @@ h1 {
     color: black;
     font-weight: bold;
     text-align: center;
-    line-height: 20px;
+    line-height: 16px; /* Ridotto la line-height per adattarsi all'altezza ridotta */
     position: absolute;
     width: 100%;
     top: 0;
     left: 0;
     z-index: 1;
+    font-size: 12px; /* Ridotto il font-size per il testo delle barre di progresso */
 }
 
 .cpu-bar .progress-bar-fill {
@@ -126,32 +145,32 @@ h1 {
     background-color: #FF9800;
 }
 
-
 .collapsible {
-background-color: #f9f9f9;
-cursor: pointer;
-padding: 10px;
-width: 100%;
-border: none;
-text-align: left;
-outline: none;
-font-size: 16px;
+    background-color: #f9f9f9;
+    cursor: pointer;
+    padding: 8px; /* Ridotto il padding per accorciare il pulsante */
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 14px; /* Ridotto la dimensione del font per il pulsante collapsible */
 }
 
 .collapsible:after {
-content: '\002B'; /* Unicode per il segno più */
-font-size: 16px;
-float: right;
-margin-left: 5px;
+    content: '\002B'; /* Unicode per il simbolo più */
+    font-size: 14px; /* Ridotto la dimensione del font */
+    float: right;
+    margin-left: 5px;
 }
 
 .collapsible.active:after {
-content: "\2212"; /* Unicode per il segno meno */
+    content: "\2212"; /* Unicode per il simbolo meno */
 }
 
 .content {
-padding: 0 18px;
-display: none;
-overflow: hidden;
-background-color: #f4f4f4;
+    padding: 0 12px; /* Ridotto il padding per accorciare lo spazio interno */
+    display: none;
+    overflow: hidden;
+    background-color: #f4f4f4;
+    font-size: 13px; /* Ridotto il font-size per il contenuto espanso */
 }
