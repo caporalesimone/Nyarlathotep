@@ -30,7 +30,7 @@ def client_update():
     # Risposta di conferma
     return jsonify({"message": f"Dati per {customName} ricevuti correttamente"}), 200
 
-@app.route('/status', methods=['GET'])
+@app.route('/', methods=['GET'])
 def status():
     return render_template('status.html')
 

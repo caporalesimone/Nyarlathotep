@@ -1,0 +1,157 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+h1 {
+    text-align: center;
+    padding: 20px;
+    background-color: #4CAF50;
+    color: white;
+    margin: 0;
+}
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 16px;
+    padding: 16px;
+}
+.card {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+}
+.card h2 {
+    margin-top: 0;
+    color: #333;
+}
+.card p {
+    margin: 8px 0;
+    color: #555;
+}
+.card pre {
+    background-color: #eee;
+    border-radius: 4px;
+    padding: 8px;
+    overflow-x: auto;
+}
+.user-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 16px;
+}
+.user-table th, .user-table td {
+    padding: 8px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+.user-table th {
+    background-color: #f2f2f2;
+}
+.logged {
+    background-color: #f8d7da;
+    font-weight: bold;
+}
+
+.info-group p {
+    margin-bottom: 4px;
+}
+
+.progress-bar-container {
+    display: flex;
+    align-items: center;
+    margin-top: 8px;
+}
+
+.progress-bar-label {
+    width: 60px;
+    text-align: left;
+    font-weight: bold;
+    color: #333;
+    margin-right: 8px;
+}
+
+.progress-bar {
+    background-color: #ddd;
+    border-radius: 4px;
+    overflow: hidden;
+    height: 20px;
+    flex-grow: 1;
+    position: relative;
+}
+
+.progress-bar-bg {
+    background-color: #ddd;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.progress-bar-fill {
+    height: 100%;
+    width: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transition: width 0.3s ease-in-out;
+}
+
+.progress-bar-text {
+    color: black;
+    font-weight: bold;
+    text-align: center;
+    line-height: 20px;
+    position: absolute;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1;
+}
+
+.cpu-bar .progress-bar-fill {
+    background-color: #4CAF50;
+}
+
+.storage-bar .progress-bar-fill {
+    background-color: #2196F3;
+}
+
+.memory-bar .progress-bar-fill {
+    background-color: #FF9800;
+}
+
+
+.collapsible {
+background-color: #f9f9f9;
+cursor: pointer;
+padding: 10px;
+width: 100%;
+border: none;
+text-align: left;
+outline: none;
+font-size: 16px;
+}
+
+.collapsible:after {
+content: '\002B'; /* Unicode per il segno più */
+font-size: 16px;
+float: right;
+margin-left: 5px;
+}
+
+.collapsible.active:after {
+content: "\2212"; /* Unicode per il segno meno */
+}
+
+.content {
+padding: 0 18px;
+display: none;
+overflow: hidden;
+background-color: #f4f4f4;
+}
