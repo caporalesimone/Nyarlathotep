@@ -1,0 +1,35 @@
+{
+    "customName": "AG2",
+    "hostname": "pippo2",
+    "ipAddresses": [
+        "192.168.0.2",
+        "127.0.0.1",
+        "143.11.12.33"
+    ],
+    "os": "linux",
+    "total_memory": 1024,
+    "used_memory": 512,
+    "cpu_usage": 10,
+    "disk_size": 1024,
+    "disk_used": 100,
+    "users": [
+        {
+            "username": "pippo",
+            "fullname": "Pippo Pluto",
+            "logged": false,
+            "login_time": "2018-01-01 00:00:00"
+        },
+        {
+            "username": "pollo",
+            "fullname": "Pollo Amadori",
+            "logged": false,
+            "login_time": "2018-01-02 00:00:00"
+        },
+        {
+            "username": "Manzoni",
+            "fullname": "Alessandro Manzoni",
+            "logged": true,
+            "login_time": "2018-01-03 12:33:00"
+        }
+    ]	
+}
