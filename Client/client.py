@@ -4,10 +4,60 @@ import psutil
 import socket
 import platform
 import time
+import os
+from configparser import ConfigParser
 from typing import List
 
-CUSTOM_NAME = "AG2"
-UPDATE_INTERVAL = 5  # Update interval in seconds
+CONFIG_FILE = 'config.ini'
+
+# Default values
+DEFAULT_CUSTOM_NAME = "WORKSTATION"
+DEFAULT_UPDATE_INTERVAL = 30  # in seconds
+DEFAULT_REMOTE_SERVER_URL = "http://localhost:8080/client_update"
+
+def load_config():
+    config = ConfigParser()
+
+    if not os.path.exists(CONFIG_FILE):
+        config['SETTINGS'] = {
+            'CUSTOM_NAME': DEFAULT_CUSTOM_NAME,
+            'UPDATE_INTERVAL': str(DEFAULT_UPDATE_INTERVAL),
+            'REMOTE_SERVER_URL': DEFAULT_REMOTE_SERVER_URL
+        }
+        with open(CONFIG_FILE, 'w') as configfile:
+            config.write(configfile)
+        print(f"Config file created with default values at {CONFIG_FILE}")
+
+    config.read(CONFIG_FILE)
+
+    if not config.has_option('SETTINGS', 'CUSTOM_NAME'):
+        config.set('SETTINGS', 'CUSTOM_NAME', DEFAULT_CUSTOM_NAME)
+        updated = True
+    else:
+        updated = False
+
+    if not config.has_option('SETTINGS', 'UPDATE_INTERVAL'):
+        config.set('SETTINGS', 'UPDATE_INTERVAL', str(DEFAULT_UPDATE_INTERVAL))
+        updated = True
+
+    if not config.has_option('SETTINGS', 'REMOTE_SERVER_URL'):
+        config.set('SETTINGS', 'REMOTE_SERVER_URL', DEFAULT_REMOTE_SERVER_URL)
+        updated = True
+
+    if updated:
+        with open(CONFIG_FILE, 'w') as configfile:
+            config.write(configfile)
+        print(f"Config file updated with missing default values at {CONFIG_FILE}")
+
+    custom_name = config.get('SETTINGS', 'CUSTOM_NAME')
+    update_interval = config.getint('SETTINGS', 'UPDATE_INTERVAL')
+    remote_server_url = config.get('SETTINGS', 'REMOTE_SERVER_URL')
+
+    print(f"Custom Name: {custom_name}")
+    print(f"Update Interval: {update_interval}")
+    print(f"Remote Server URL: {remote_server_url}")
+
+    return custom_name, update_interval, remote_server_url
 
 class User:
     def __init__(self, username, fullname, logged, login_time):
@@ -64,7 +114,8 @@ def get_logged_in_users():
         users.append(User(username, fullname, logged, login_time))
     return users
 
-url = "http://localhost:8080/client_update"
+# Carica i valori di configurazione
+CUSTOM_NAME, UPDATE_INTERVAL, REMOTE_SERVER_URL = load_config()
 
 while True:
     hostname = socket.gethostname()
@@ -90,7 +141,7 @@ while True:
 
     json_data = client_update.to_json()
 
-    response = requests.post(url, data=json_data, headers={"Content-Type": "application/json"})
+    response = requests.post(REMOTE_SERVER_URL, data=json_data, headers={"Content-Type": "application/json"})
 
     if response.status_code == 200:
         print("Data successfully sent!")
