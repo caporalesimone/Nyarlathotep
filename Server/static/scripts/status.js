@@ -12,6 +12,10 @@ function fetchStatus() {
                 let card = document.createElement('div');
                 card.classList.add('card');
 
+                if (item.timed_out) {
+                    card.classList.add('timed_out');
+                }
+
                 let users = Array.isArray(item.json_data.users) ? item.json_data.users : [];
                 let loggedInUsers = users.filter(user => user.logged);
 
@@ -41,7 +45,9 @@ function fetchStatus() {
                     <div class="info-group">
                         <p><strong>Hostname:</strong> ${item.json_data.hostname}</p>
                         <p><strong>IP:</strong> ${ipAddresses}</p>
+                        <!--
                         <p><strong>Last Update:</strong> ${item.last_update}</p>
+                        -->
                         <p><strong>OS:</strong> ${item.json_data.os || 'N/A'}</p>
                     </div>
                     <div class="progress-bar-container">
@@ -120,5 +126,5 @@ function fetchStatus() {
         });
 }
 
-setInterval(fetchStatus, 3000);
+setInterval(fetchStatus, 1000);
 window.onload = fetchStatus;

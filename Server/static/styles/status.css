@@ -22,45 +22,77 @@ h1 {
 }
 
 .card {
-    background: white;
-    border-radius: 6px; /* Ridotto il border-radius per rendere le card più compatte */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Ridotto l'ombra per un aspetto più leggero */
-    padding: 12px; /* Ridotto il padding interno per contenere meglio il contenuto */
-    display: flex;
-    flex-direction: column;
+    position: relative;
+    padding: 20px;
+    margin: 10px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: white;
+    color: black;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease-in-out;
+}
+
+/* Style with timed_out */
+.card.timed_out {
+    background-color: #e0e0e0;
+    color: #a0a0a0;
+    border-color:#b0b0b0;
+}
+
+/* Offline message */
+.card.timed_out::after {
+    content: "Offline";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-45deg);
+    font-size: 3rem;
+    color: rgba(255, 0, 0, 0.7);
+    font-weight: bold;
+    text-transform: uppercase;
+    z-index: 10;
+    white-space: nowrap;
+    pointer-events: none;
+    opacity: 0.8;
+}
+
+/* Disable all interactions */
+.card.timed_out * {
+    pointer-events: none;
 }
 
 .card h2 {
     margin-top: 0;
     color: #333;
-    font-size: 16px; /* Ridotto il font-size per un titolo della card più compatto */
+    font-size: 16px;
 }
 
 .card p {
-    margin: 4px 0; /* Ridotto il margine per ridurre lo spazio tra i paragrafi */
+    margin: 4px 0;
     color: #555;
-    font-size: 14px; /* Ridotto il font-size per i paragrafi */
+    font-size: 14px;
 }
 
 .card pre {
     background-color: #eee;
     border-radius: 4px;
-    padding: 6px; /* Ridotto il padding per un aspetto più compatto */
+    padding: 6px;
     overflow-x: auto;
-    font-size: 13px; /* Ridotto il font-size per il testo preformattato */
+    font-size: 13px;
 }
 
 .user-table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 12px; /* Ridotto il margine superiore */
+    margin-top: 12px;
 }
 
 .user-table th, .user-table td {
-    padding: 6px; /* Ridotto il padding per accorciare le celle della tabella */
+    padding: 6px;
     border: 1px solid #ddd;
     text-align: left;
-    font-size: 14px; /* Ridotto il font-size per la tabella */
+    font-size: 14px;
 }
 
 .user-table th {
@@ -70,34 +102,34 @@ h1 {
 .logged {
     background-color: #f8d7da;
     font-weight: bold;
-    font-size: 14px; /* Ridotto il font-size per il testo evidenziato */
+    font-size: 14px;
 }
 
 .info-group p {
-    margin-bottom: 2px; /* Ridotto il margine inferiore */
-    font-size: 13px; /* Ridotto il font-size per le informazioni di gruppo */
+    margin-bottom: 2px;
+    font-size: 13px;
 }
 
 .progress-bar-container {
     display: flex;
     align-items: center;
-    margin-top: 6px; /* Ridotto il margine superiore */
+    margin-top: 6px;
 }
 
 .progress-bar-label {
-    width: 50px; /* Ridotto la larghezza per una visualizzazione più compatta */
+    width: 50px;
     text-align: left;
     font-weight: bold;
     color: #333;
-    margin-right: 6px; /* Ridotto il margine destro */
-    font-size: 13px; /* Ridotto il font-size per le etichette delle barre di progresso */
+    margin-right: 6px;
+    font-size: 13px;
 }
 
 .progress-bar {
     background-color: #ddd;
     border-radius: 4px;
     overflow: hidden;
-    height: 16px; /* Ridotto l'altezza per una barra di progresso più compatta */
+    height: 16px;
     flex-grow: 1;
     position: relative;
 }
@@ -124,13 +156,13 @@ h1 {
     color: black;
     font-weight: bold;
     text-align: center;
-    line-height: 16px; /* Ridotto la line-height per adattarsi all'altezza ridotta */
+    line-height: 16px;
     position: absolute;
     width: 100%;
     top: 0;
     left: 0;
     z-index: 1;
-    font-size: 12px; /* Ridotto il font-size per il testo delle barre di progresso */
+    font-size: 12px;
 }
 
 .cpu-bar .progress-bar-fill {
@@ -148,29 +180,29 @@ h1 {
 .collapsible {
     background-color: #f9f9f9;
     cursor: pointer;
-    padding: 8px; /* Ridotto il padding per accorciare il pulsante */
+    padding: 8px;
     width: 100%;
     border: none;
     text-align: left;
     outline: none;
-    font-size: 14px; /* Ridotto la dimensione del font per il pulsante collapsible */
+    font-size: 14px;
 }
 
 .collapsible:after {
-    content: '\002B'; /* Unicode per il simbolo più */
-    font-size: 14px; /* Ridotto la dimensione del font */
+    content: '\002B'; /* Unicode symbol plus */
+    font-size: 14px;
     float: right;
     margin-left: 5px;
 }
 
 .collapsible.active:after {
-    content: "\2212"; /* Unicode per il simbolo meno */
+    content: "\2212"; /* Unicode symbol minus */
 }
 
 .content {
-    padding: 0 12px; /* Ridotto il padding per accorciare lo spazio interno */
+    padding: 0 12px;
     display: none;
     overflow: hidden;
     background-color: #f4f4f4;
-    font-size: 13px; /* Ridotto il font-size per il contenuto espanso */
+    font-size: 13px;
 }

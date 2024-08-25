@@ -7,7 +7,7 @@ import time
 from typing import List
 
 CUSTOM_NAME = "AG2"
-UPDATE_INTERVAL = 30  # Update interval in seconds
+UPDATE_INTERVAL = 5  # Update interval in seconds
 
 class User:
     def __init__(self, username, fullname, logged, login_time):
@@ -30,7 +30,7 @@ class ClientUpdate:
         self.users = users
 
     def to_json(self):
-        return json.dumps(self, default=lambda o: o.__dict__, indent=4)
+        return json.dumps(self, default=lambda o: o.__dict__, indent=2)
 
 def get_ip_addresses():
     host_name = socket.gethostname()
