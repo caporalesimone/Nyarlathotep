@@ -144,7 +144,8 @@ while True:
     response = requests.post(REMOTE_SERVER_URL, data=json_data, headers={"Content-Type": "application/json"})
 
     if response.status_code == 200:
-        print("Data successfully sent!")
+        timestamp = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime())
+        print(f"{timestamp} - Data successfully sent")
     else:
         print(f"Error sending data: {response.status_code}")
 
