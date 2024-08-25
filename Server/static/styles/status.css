@@ -7,18 +7,18 @@ body {
 
 h1 {
     text-align: center;
-    padding: 16px; /* Ridotto rispetto a 20px */
+    padding: 16px;
     background-color: #4CAF50;
     color: white;
     margin: 0;
-    font-size: 20px; /* Ridotto il font-size per rendere il titolo più compatto */
+    font-size: 20px;
 }
 
 .grid-container {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Ridotto il minmax per una griglia più compatta */
-    gap: 12px; /* Ridotto il gap per accorciare lo spazio tra le card */
-    padding: 12px; /* Ridotto il padding per accorciare lo spazio interno */
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 12px;
+    padding: 12px;
 }
 
 .card {
@@ -89,10 +89,10 @@ h1 {
 }
 
 .user-table th, .user-table td {
-    padding: 6px;
+    padding: 4px;
     border: 1px solid #ddd;
     text-align: left;
-    font-size: 14px;
+    font-size: 12px;
 }
 
 .user-table th {
@@ -100,9 +100,8 @@ h1 {
 }
 
 .logged {
-    background-color: #f8d7da;
+    background-color: #64e268;
     font-weight: bold;
-    font-size: 14px;
 }
 
 .info-group p {
