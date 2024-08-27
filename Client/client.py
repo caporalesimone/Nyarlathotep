@@ -109,12 +109,11 @@ def get_logged_in_users():
     for user in psutil.users():
         username = user.name
         fullname = username  # Using username as fullname for simplicity
-        logged = True
+        logged = True # Always True for now
         login_time = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(user.started))
         users.append(User(username, fullname, logged, login_time))
     return users
 
-# Carica i valori di configurazione
 CUSTOM_NAME, UPDATE_INTERVAL, REMOTE_SERVER_URL = load_config()
 
 while True:
@@ -147,6 +146,6 @@ while True:
         timestamp = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime())
         print(f"{timestamp} - Data successfully sent")
     else:
-        print(f"Error sending data: {response.status_code}")
+        print(f"Error sending data: HTTP ERROR {response.status_code}")
 
     time.sleep(UPDATE_INTERVAL)
