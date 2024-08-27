@@ -91,13 +91,13 @@ function fetchStatus() {
 
                     <button class="collapsible">Show extra info</button>
                     <div class="content">
-                        <pre>${JSON.stringify(item.json_data, null, 2) || 'N/A'}</pre>
+                        <pre>${JSON.stringify(item, null, 2) || 'N/A'}</pre>
                     </div>
                 `;
 
                 container.appendChild(card);
 
-                // Ripristina lo stato del card
+                // Recover card state
                 let collapsible = card.querySelector('.collapsible');
                 let content = card.querySelector('.content');
 
@@ -108,7 +108,7 @@ function fetchStatus() {
                     content.style.display = "none";
                 }
 
-                // Aggiungi event listener per aggiornare lo stato al click
+                // Event listener for collapsible
                 collapsible.addEventListener('click', function() {
                     this.classList.toggle('active');
                     if (content.style.display === "block") {
@@ -126,5 +126,5 @@ function fetchStatus() {
         });
 }
 
-setInterval(fetchStatus, 1000);
+setInterval(fetchStatus, 10000);
 window.onload = fetchStatus;

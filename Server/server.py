@@ -5,23 +5,23 @@ CONSIDER_OFFLINE_AFTER_SECONDS = 60
 
 app = Flask(__name__)
 
-# Dizionario per memorizzare l'ultimo JSON ricevuto per ogni customName
+# Dictionary for store all the data from the clients (by customName)
 client_data_map = {}
 
 @app.route('/client_update', methods=['POST'])
 def client_update():
     global client_data_map
-    # Riceve il JSON dalla richiesta POST
+
     data = request.json
 
-    # Verifica che il JSON contenga l'customName
+    # Check if the POST has the key "customName"
     if "customName" not in data:
         return jsonify({"error": "Missing key: customName"}), 400
 
     customName = data["customName"]
     client_ip = request.remote_addr  # Client IP
     
-    last_update = datetime.now().strftime("%Y-%m-%d %H:%M:%S")  # Timestamp corrente
+    last_update = datetime.now().strftime("%Y-%m-%d %H:%M:%S")  # Now
 
     client_data_map[customName] = {
         "json_data": data,
