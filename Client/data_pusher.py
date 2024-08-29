@@ -12,10 +12,13 @@ class DataPusher:
         data = DataCollector()
         self.last_json_data = {
             "client_name": self.client_name,
-            "network": data.network,
+            "local_time": time.strftime('%Y-%m-%d %H:%M:%S', time.localtime()),
+            "hostname": data.hostname,
+            "network_name": data.network_name,
+            "net_interfaces": data.net_interfaces,
             "os": data.os,
             "hardware": data.hardware,
-            "users": data.users
+            "users": data.users,
         }
 
         self.last_json = json.dumps(self.last_json_data, default=lambda o: o.__dict__, indent=2)

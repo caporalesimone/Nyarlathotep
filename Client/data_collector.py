@@ -5,7 +5,9 @@ from user_info import UserInfo
 
 class DataCollector:
     def __init__(self) -> None:
-        self.network = NetworkInfo.get_network_interfaces()
+        self.hostname = NetworkInfo.get_host_name()
+        self.network_name = NetworkInfo.get_network_name()
+        self.net_interfaces = NetworkInfo.get_network_interfaces()
         self.os = OSInfo()
         self.hardware = HardwareInfo()
         self.users = UserInfo.get_logged_users()

@@ -5,6 +5,20 @@ from collections import defaultdict
 
 class NetworkInfo:
     @staticmethod
+    def get_host_name() -> str:
+        try:
+            return socket.gethostname()
+        except Exception as e:
+            raise RuntimeError(f"Error during host name query: {e}")
+    
+    @staticmethod
+    def get_network_name(family: int = socket.AF_INET) -> str:
+         try:
+             return socket.getfqdn()
+         except Exception as e:
+             raise RuntimeError(f"Error during network name query: {e}")
+
+    @staticmethod
     def get_network_interfaces(family: int = socket.AF_INET) -> List[Dict[str, Any]]:
         interfaces = defaultdict(lambda: {"mac_address": None, "ip_addresses": []})
 
