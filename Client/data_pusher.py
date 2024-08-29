@@ -28,7 +28,7 @@ class DataPusher:
 
         self.last_json = json.dumps(self.last_json_data, default=lambda o: o.__dict__, indent=2)
 
-        response = requests.post(self.remote_server_url, data=self.last_json, headers={"Content-Type": "application/json"})
+        response = requests.post(self.remote_server_url, data=self.last_json, headers={"Content-Type": "application/json; charset=utf-8"})
         if response.status_code == 200:
             timestamp = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime())
             print(f"{timestamp} - Data successfully sent")
