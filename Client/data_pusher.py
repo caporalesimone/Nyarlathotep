@@ -2,9 +2,12 @@ import requests
 import json
 import time
 from data_collector import DataCollector
+from versions import JSON_VERSION
 
 class DataPusher:
-    def __init__(self, client_name, remote_server_url) -> None:
+    def __init__(self, client_sw_version, client_name, remote_server_url) -> None:
+        self.client_sw_version = client_sw_version
+        self.json_version = JSON_VERSION
         self.client_name = client_name
         self.remote_server_url = remote_server_url
 
@@ -12,7 +15,9 @@ class DataPusher:
         data = DataCollector()
         self.last_json_data = {
             "client_name": self.client_name,
+            "client_sw_version": self.client_sw_version,
             "local_time": time.strftime('%Y-%m-%d %H:%M:%S', time.localtime()),
+            "json_version": self.json_version,
             "hostname": data.hostname,
             "network_name": data.network_name,
             "net_interfaces": data.net_interfaces,

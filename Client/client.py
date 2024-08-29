@@ -1,10 +1,11 @@
 import time
 from config_file import ConfigFile
 from data_pusher import DataPusher
+from versions import CLIENT_SW_VERSION
 
 def main():
     config = ConfigFile()
-    data = DataPusher(config.custom_name, config.remote_server_url)
+    data = DataPusher(CLIENT_SW_VERSION, config.custom_name, config.remote_server_url)
     
     while True:
         data.push_new_data()
