@@ -1,5 +1,28 @@
 let cardState = {};
 
+// Extract IP addresses from the json data into a single string comma separated
+function extractIPAddresses(data) {
+    const netInterfaces = data.net_interfaces;
+    const ipAddresses = [];
+
+    netInterfaces.forEach(interface => {
+        ipAddresses.push(...interface.ip_addresses);
+    });
+
+    return ipAddresses.join(', ');
+}
+
+// Create the HTML user table from the json data
+function extractUsersTable(data) {
+    let users = Array.isArray(data.users) ? data.users : [];
+    return  users.map(user => `
+        <tr class="${user.logged ? 'logged' : ''}">
+            <td>${user.username}</td>
+            <td>${user.login_time}</td>
+        </tr>
+    `).join('');
+}
+
 function fetchStatus() {
     fetch('/status_data')
         .then(response => response.json())
@@ -7,55 +30,36 @@ function fetchStatus() {
             let container = document.getElementById('status-container');
             container.innerHTML = '';
 
-            for (let customName in data) {
-                let item = data[customName];
+            for (let client_name in data) {
+                let json = data[client_name];
                 let card = document.createElement('div');
                 card.classList.add('card');
 
-                if (item.timed_out) {
+                // If the client is timed out, add a class that overlay disabling the card
+                if (json.timed_out) {
                     card.classList.add('timed_out');
                 }
 
-                let users = Array.isArray(item.json_data.users) ? item.json_data.users : [];
-                let loggedInUsers = users.filter(user => user.logged);
+                // IP Addresses
+                let ipAddresses = extractIPAddresses(json.details);
 
-                let userRows = users.map(user => `
-                    <tr class="${user.logged ? 'logged' : ''}">
-                        <td>${user.fullname}</td>
-                        <td>${user.login_time}</td>
-                    </tr>
-                `).join('');
-
-                if (loggedInUsers.length === 0) {
-                    userRows = userRows.replace(/class="logged"/g, '');
-                }
-
-                // Join ip addresses
-                let ipAddresses = Array.from(new Set([
-                    item.client_ip, 
-                    ...(item.json_data.ipAddresses || [])
-                ])).join(', ');
-
-                // Unique ID for the card
-                let cardId = `card_${customName}`;
+                // Users table
+                let userRows = extractUsersTable(json.details);
 
                 // card content
                 card.innerHTML = `
-                    <h2>${customName}</h2>
+                    <h2>${client_name}</h2>
                     <div class="info-group">
-                        <p><strong>Hostname:</strong> ${item.json_data.hostname}</p>
+                        <p><strong>Hostname:</strong> ${json.details.hostname}</p>
                         <p><strong>IP:</strong> ${ipAddresses}</p>
-                        <!--
-                        <p><strong>Last Update:</strong> ${item.last_update}</p>
-                        -->
-                        <p><strong>OS:</strong> ${item.json_data.os || 'N/A'}</p>
+                        <p><strong>OS:</strong> ${json.details.os.os_name || 'N/A'}</p>
                     </div>
                     <div class="progress-bar-container">
                         <div class="progress-bar-label">CPU</div>
                         <div class="progress-bar cpu-bar">
                             <div class="progress-bar-bg"></div>
-                            <div class="progress-bar-fill" style="width: ${item.json_data.cpu_usage || 0}%"></div>
-                            <div class="progress-bar-text">${item.json_data.cpu_usage || '0'}%</div>
+                            <div class="progress-bar-fill" style="width: ${json.details.hardware.cpu_usage || 0}%"></div>
+                            <div class="progress-bar-text">${json.details.hardware.cpu_usage || '0'}%</div>
                         </div>
                     </div>
 
@@ -63,8 +67,8 @@ function fetchStatus() {
                         <div class="progress-bar-label">Storage</div>
                         <div class="progress-bar storage-bar">
                             <div class="progress-bar-bg"></div>
-                            <div class="progress-bar-fill" style="width: ${((item.json_data.disk_used || 0) / item.json_data.disk_size) * 100}%"></div>
-                            <div class="progress-bar-text">${item.json_data.disk_size - (item.json_data.disk_used || 0)} GB free of ${item.json_data.disk_size} GB</div>
+                            <div class="progress-bar-fill" style="width: ${((json.details.hardware.disk_used_GB || 0) / json.details.hardware.disk_total_GB) * 100}%"></div>
+                            <div class="progress-bar-text">${json.details.hardware.disk_total_GB - (json.details.hardware.disk_used_GB || 0)} GB free of ${json.details.hardware.disk_total_GB} GB</div>
                         </div>
                     </div>
 
@@ -72,16 +76,16 @@ function fetchStatus() {
                         <div class="progress-bar-label">Memory</div>
                         <div class="progress-bar memory-bar">
                             <div class="progress-bar-bg"></div>
-                            <div class="progress-bar-fill" style="width: ${item.json_data.total_memory > 0 ? ((item.json_data.used_memory || 0) / item.json_data.total_memory) * 100 : 0}%"></div>
-                            <div class="progress-bar-text">${item.json_data.total_memory - (item.json_data.used_memory || 0)} MB free of ${item.json_data.total_memory} MB</div>
+                            <div class="progress-bar-fill" style="width: ${json.details.hardware.ram_total_MB > 0 ? ((json.details.hardware.ram_used_MB || 0) / json.details.hardware.ram_total_MB) * 100 : 0}%"></div>
+                            <div class="progress-bar-text">${json.details.hardware.ram_total_MB - (json.details.hardware.ram_used_MB || 0)} MB free of ${json.details.hardware.ram_total_MB} MB</div>
                         </div>
                     </div>
 
                     <table class="user-table">
                         <thead>
                             <tr>
-                                <th>Full Name</th>
-                                <th>Login Time</th>
+                                <th style="text-align: center;">Full Name</th>
+                                <th style="text-align: center;">Login Time</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -91,7 +95,7 @@ function fetchStatus() {
 
                     <button class="collapsible">Show extra info</button>
                     <div class="content">
-                        <pre>${JSON.stringify(item, null, 2) || 'N/A'}</pre>
+                        <pre>${JSON.stringify(json, null, 2) || 'N/A'}</pre>
                     </div>
                 `;
 
@@ -100,6 +104,9 @@ function fetchStatus() {
                 // Recover card state
                 let collapsible = card.querySelector('.collapsible');
                 let content = card.querySelector('.content');
+
+                // Unique ID for the card
+                let cardId = `card_${client_name}`;
 
                 if (cardState[cardId] && cardState[cardId].expanded) {
                     collapsible.classList.add('active');

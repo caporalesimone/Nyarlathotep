@@ -29,7 +29,7 @@ def client_update():
     client_data_map[client_name] = {
         "last_update": datetime.now().strftime("%Y-%m-%d %H:%M:%S"), # Now
         "from_ip": request.remote_addr, # Client's IP
-        "json_data": data,
+        "details": data,
     }
 
     return jsonify({"message": f"{client_name} update recorded"}), 200

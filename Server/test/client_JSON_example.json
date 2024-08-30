@@ -1,35 +1,41 @@
 {
-    "customName": "Workstation 1",
-    "hostname": "pippo2",
-    "ipAddresses": [
-        "192.168.0.2",
-        "127.0.0.1",
-        "143.11.12.33"
-    ],
-    "os": "linux",
-    "total_memory": 1024,
-    "used_memory": 512,
-    "cpu_usage": 10,
-    "disk_size": 1024,
-    "disk_used": 100,
-    "users": [
-        {
-            "username": "pippo",
-            "fullname": "Pippo Pluto",
-            "logged": false,
-            "login_time": "2018-01-01 00:00:00"
-        },
-        {
-            "username": "pollo",
-            "fullname": "Pollo Amadori",
-            "logged": false,
-            "login_time": "2018-01-02 00:00:00"
-        },
-        {
-            "username": "Manzoni",
-            "fullname": "Alessandro Manzoni",
-            "logged": true,
-            "login_time": "2018-01-03 12:33:00"
-        }
-    ]	
+  "client_name": "AZtest",
+  "client_sw_version": "1.0",
+  "hardware": {
+    "cpu_usage": 0.5,
+    "disk_total_GB": 953,
+    "disk_used_GB": 15,
+    "ram_total_MB": 32400,
+    "ram_used_MB": 15423
+  },
+  "hostname": "AB239308",
+  "json_version": "2.0",
+  "local_time": "2024-08-30 16:25:22",
+  "net_interfaces": [
+    {
+      "interface": "Ethernet 4",
+      "ip_addresses": [
+        "10.206.80.46"
+      ],
+      "mac": "02-50-41-00-00-01"
+    },
+    {
+      "interface": "Wi-Fi",
+      "ip_addresses": [
+        "192.168.178.42"
+      ],
+      "mac": "F4-6D-3F-CE-09-28"
+    }
+  ],
+  "network_name": "AB239308.dev.mygroup.company.com",
+  "os": {
+    "os_name": "Windows 11"
+  },
+  "users": [
+    {
+      "logged": true,
+      "login_time": "2024-08-30 01:50:21",
+      "username": "FxxxxxxC"
+    }
+  ]
 }
