@@ -2,7 +2,7 @@ from typing import Tuple
 import psutil
 
 class HardwareInfo:
-    def __init__(self):
+    def __init__(self) -> None:
         self.ram_total_MB, self.ram_used_MB = self._get_ram_info_MB()
         self.disk_total_GB, self.disk_used_GB = self._get_disk_info_GB()
         self.cpu_usage : float = self._get_cpu_usage()

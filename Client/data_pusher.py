@@ -11,7 +11,7 @@ class DataPusher:
         self.client_name = client_name
         self.remote_server_url = remote_server_url
 
-    def push_new_data(self):
+    def push_new_data(self) -> None:
         data = DataCollector()
         self.last_json_data = {
             "client_name": self.client_name,
