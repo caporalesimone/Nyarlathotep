@@ -34,18 +34,43 @@ class UserInfo:
         # parsing result
         lines = result.stdout.splitlines()
         users = []
-    
+
+# Exemple of output
+
+#  NOMEUTENTE            NOMESESSIONE       ID  STATO   INATTIVITÀ ACCESSO
+# >a11111a               rdp-tcp#87          2  Attivo          .  02/09/2024 09:47
+#  c22222c                                   3  Disc      1+03:52  05/09/2024 12:51
+#  d33333d                                   4  Disc        23:34  05/09/2024 17:08
+
         # Skip first line, which is the header
         for line in lines[1:]:  
             parts = line.split()
-            if len(parts) >= 3:
-                username = parts[0].lstrip('>').upper()
-                session_name = parts[1]
-                logged = True if session_name.lower() in ['console'] else False
-                session_id = parts[2]
-                status = parts[3]
-                idle_time = parts[4]
-                login_time = parts[5] + ' ' + parts[6]
+
+            if len(parts) >= 6:
+                idx = 0
+                username = parts[idx].lstrip('>').upper()
+                idx += 1
+
+                if len(parts) == 7:
+                    session_name = parts[idx]
+                    logged = True
+                    idx += 1
+                else:
+                    session_name = ''
+                    logged = False
+
+                session_id = parts[idx]
+
+                idx += 1
+                status = parts[idx]
+
+                idx += 1
+                idle_time = parts[idx]
+
+                idx += 1
+                login_time = parts[idx] + ' ' + parts[idx + 1]
+
+                idx += 2
                 users.append({"username": username, "session_name": session_name, "session_id": session_id, "status": status, "idle_time": idle_time, "login_time": login_time, "logged": logged})
         return users
 
