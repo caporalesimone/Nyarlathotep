@@ -164,5 +164,6 @@ cython_debug/
 
 # Custom ignore
 
-Client/config.ini
-/Client/output
+/Agent/config.ini
+/Agent/output
+/Agent/config.ini
