@@ -48,7 +48,10 @@ function fetchStatus() {
 
                 // card content
                 card.innerHTML = `
-                    <h2>${client_name}</h2>
+                    <h2>${client_name} 
+                        ${json.new_version_available != "" ? 
+                        '<span class="version-upgrade">⬆️<span class="tooltip">New agent version ' + json.new_version_available + ' available!</span></span>' : ''}
+                    </h2>
                     <div class="info-group">
                         <p><strong>Hostname:</strong> ${json.details.hostname}</p>
                         <p><strong>IP:</strong> ${ipAddresses}</p>

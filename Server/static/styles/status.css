@@ -205,3 +205,42 @@ h1 {
     background-color: #f4f4f4;
     font-size: 13px;
 }
+
+.version-upgrade {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+  }
+
+  .version-upgrade .tooltip {
+    visibility: hidden;
+    width: 140px;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px;
+    position: absolute;
+    bottom: 150%;
+    left: 50%;
+    margin-left: -70px;
+    opacity: 0;
+    transition: opacity 0.3s;
+    font-size: 12px;
+  }
+
+  .version-upgrade .tooltip::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #333 transparent transparent transparent;
+  }
+
+  .version-upgrade:hover .tooltip {
+    visibility: visible;
+    opacity: 1;
+  }
