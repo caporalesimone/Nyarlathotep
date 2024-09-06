@@ -9,3 +9,6 @@ Server is a flask web server waiting for a POST on the route `/client_update` co
 Each JSON file contains the status of a remote client and will be shown on a specifc card.
 
 
+## Agent
+To build a windows executable use auto-py-to-exe `pip install auto-py-to-exe`
+
