@@ -17,11 +17,13 @@ function extractUsersTable(data) {
     let users = Array.isArray(data.users) ? data.users : [];
     return  users.map(user => `
         <tr class="${user.logged ? 'logged' : ''}">
-            <td>${user.username}</td>
-            <td>${user.login_time}</td>
+            <td style="text-align: center;">${user.username}</td>
+            <td style="text-align: center;">${user.login_time}</td>
         </tr>
     `).join('');
 }
+
+
 
 function fetchStatus() {
     fetch('/status_data')
