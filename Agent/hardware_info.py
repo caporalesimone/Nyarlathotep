@@ -1,11 +1,23 @@
 from typing import Tuple
 import psutil
+import platform
+import subprocess
 
 class HardwareInfo:
     def __init__(self) -> None:
         self.ram_total_MB, self.ram_used_MB = self._get_ram_info_MB()
         self.disk_total_GB, self.disk_used_GB = self._get_disk_info_GB()
         self.cpu_usage : float = self._get_cpu_usage()
+        self.serial_number = self._get_machine_serial_number()
+
+    def _get_machine_serial_number(self) -> str:
+        """Returns the machine's serial number"""
+        if platform.system() == 'Windows':
+            output = subprocess.check_output('wmic bios get serialnumber', shell=True)
+            serial_number = output.decode().strip().split('\n')[-1]
+            return serial_number
+        else:
+            return "N/A"
 
     def _get_ram_info_MB(self) -> Tuple[int, int]:
         """Returns the total and used RAM in MB"""
