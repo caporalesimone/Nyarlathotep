@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+  nyarlathotep-server:
+    image: nyarlathotep
+    build:
+      context: .
+    ports:
+      - "8080:8080"
+    volumes:
+      - .:/app
+    stdin_open: true
+    tty: true
