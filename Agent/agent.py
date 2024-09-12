@@ -8,10 +8,11 @@ def main():
     print("Software version: " + CLIENT_SW_VERSION)
     config = ConfigFile()
     data = DataPusher(CLIENT_SW_VERSION, config.custom_name, config.remote_server_url)
+    
     while True:
+        start_time = time.time()
         data.push_new_data()
-        #print(data.last_json)
-        time.sleep(config.update_interval)
+        time.sleep(max(0, config.update_interval - (time.time() - start_time)))
 
 if __name__ == "__main__":
     main()
