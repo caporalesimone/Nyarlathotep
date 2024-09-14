@@ -1,10 +1,13 @@
+""" This script is used to create an executable file from the agent.py scripP """
+
 import os
-import datetime
 import subprocess
 import re
 
 def update_version_file(file_path) -> str:
-    with open(file_path, 'r') as file:
+    """ Update the version in the versions.py file """	
+
+    with open(file_path, 'r', encoding='utf-8') as file:
         lines = file.readlines()
 
     version_pattern = re.compile(r'CLIENT_SW_VERSION\s*=\s*"(.*?)"')
@@ -20,13 +23,15 @@ def update_version_file(file_path) -> str:
             new_lines.append(f'CLIENT_SW_VERSION = "{new_version}"\n')
         else:
             new_lines.append(line)
-    
-    with open(file_path, 'w') as file:
+
+    with open(file_path, 'w', encoding='utf-8') as file:
         file.writelines(new_lines)
-    
+
     return new_version
 
 def main():
+    """ Main function to create the executable file """	
+
     current_dir = os.path.dirname(os.path.abspath(__file__))
 
     versions_file_path = os.path.join(current_dir, "versions.py")
@@ -34,7 +39,7 @@ def main():
 
     output_folder = f"output_{version}"
     output_path = os.path.join(current_dir, output_folder)
-    
+
     os.makedirs(output_path, exist_ok=True)
 
     script_path = os.path.join(current_dir, "agent.py")
@@ -46,8 +51,8 @@ def main():
         script_path
     ]
 
-    result = subprocess.run(command, capture_output=True, text=True, cwd=output_path)
-    
+    result = subprocess.run(command, capture_output=True, text=True, cwd=output_path, check=False)
+
     print("Output:", result.stdout)
     print("Error:", result.stderr)
 

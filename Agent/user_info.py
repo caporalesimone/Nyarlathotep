@@ -1,9 +1,10 @@
-from typing import List, Dict
+""" User Info Module """
 
+from typing import List, Dict
 import subprocess
 
 class UserInfo:
-
+    """ User Info Class """	
 
     # Old method
 
@@ -12,23 +13,28 @@ class UserInfo:
     #     users = []
     #     for user in psutil.users():
     #         username = user.name
-    #         logged = True  # TODO: Implement a way to check if user is logged in
+    #         logged = True  # Implement a way to check if user is logged in
     #         login_time = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(user.started))
     #         users.append({"username": username, "logged": logged, "login_time": login_time})
     #     return users
-    
+
 
     @staticmethod
     def get_logged_users() -> List[Dict[str, str]]:
+        """ Get logged users """
+
         # Alternative command qwinsta
-        result = subprocess.run(['query', 'user'], capture_output=True, text=True) 
+        result = subprocess.run(['query', 'user'],
+                                capture_output=True,
+                                text=True,
+                                check=False)
 
         # Seems it always return 1. why?
         # if result.returncode != 0:
         #     print(result.returncode)
         #     print("Error on command 'query user'.")
         #     return
-    
+
         #print(result.stdout) # debug print
 
         # parsing result
@@ -43,7 +49,7 @@ class UserInfo:
 #  d33333d                                   4  Disc        23:34  05/09/2024 17:08
 
         # Skip first line, which is the header
-        for line in lines[1:]:  
+        for line in lines[1:]:
             parts = line.split()
 
             if len(parts) >= 6:
@@ -71,6 +77,11 @@ class UserInfo:
                 login_time = parts[idx] + ' ' + parts[idx + 1]
 
                 idx += 2
-                users.append({"username": username, "session_name": session_name, "session_id": session_id, "status": status, "idle_time": idle_time, "login_time": login_time, "logged": logged})
+                users.append({"username": username,
+                              "session_name": session_name, 
+                              "session_id": session_id, 
+                              "status": status, 
+                              "idle_time": idle_time, 
+                              "login_time": login_time, 
+                              "logged": logged})
         return users
-

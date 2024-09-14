@@ -1,3 +1,5 @@
+""" This module reads and writes the configuration file for the client. """
+
 import os
 from configparser import ConfigParser
 
@@ -9,6 +11,7 @@ DEFAULT_UPDATE_INTERVAL = 30  # in seconds
 DEFAULT_REMOTE_SERVER_URL = "http://localhost:8080/client_update"
 
 class ConfigFile:
+    """ConfigFile class to read and write the configuration file for the client."""	
 
     def __init__(self) -> None:
         config = ConfigParser()
@@ -19,7 +22,7 @@ class ConfigFile:
                 'UPDATE_INTERVAL': str(DEFAULT_UPDATE_INTERVAL),
                 'REMOTE_SERVER_URL': DEFAULT_REMOTE_SERVER_URL
             }
-            with open(CONFIG_FILE, 'w') as configfile:
+            with open(CONFIG_FILE, 'w', encoding='utf-8') as configfile:
                 config.write(configfile)
             print(f"Config file created with default values at {CONFIG_FILE}")
 
@@ -40,7 +43,7 @@ class ConfigFile:
             updated = True
 
         if updated:
-            with open(CONFIG_FILE, 'w') as configfile:
+            with open(CONFIG_FILE, 'w', encoding='utf-8') as configfile:
                 config.write(configfile)
             print(f"Config file updated with missing default values at {CONFIG_FILE}")
 

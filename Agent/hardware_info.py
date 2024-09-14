@@ -1,12 +1,14 @@
+""" The hardware_info module provides the hardware information of the machine. """	
 from typing import Tuple
-import psutil
 import platform
 import subprocess
+import psutil
 
 class HardwareInfo:
+    """ The HardwareInfo class provides the hardware information. """
     def __init__(self) -> None:
-        self.ram_total_MB, self.ram_used_MB = self._get_ram_info_MB()
-        self.disk_total_GB, self.disk_used_GB = self._get_disk_info_GB()
+        self.ram_total_MB, self.ram_used_MB = self._get_ram_info_mb()
+        self.disk_total_GB, self.disk_used_GB = self._get_disk_info_gb()
         self.cpu_usage : float = self._get_cpu_usage()
         self.serial_number = self._get_machine_serial_number()
 
@@ -14,19 +16,19 @@ class HardwareInfo:
         """Returns the machine's serial number"""
         if platform.system() == 'Windows':
             output = subprocess.check_output('wmic bios get serialnumber', shell=True)
-            serial_number = output.decode().strip().split('\n')[-1]
+            serial_number = output.decode().strip().rsplit('\n', maxsplit=1)[-1]
             return serial_number
         else:
             return "N/A"
 
-    def _get_ram_info_MB(self) -> Tuple[int, int]:
+    def _get_ram_info_mb(self) -> Tuple[int, int]:
         """Returns the total and used RAM in MB"""
         ram = psutil.virtual_memory()
         total_ram = ram.total // (1024 * 1024)  # in MB
         used_ram = ram.used // (1024 * 1024)    # in MB
         return total_ram, used_ram
 
-    def _get_disk_info_GB(self) -> Tuple[int, int]:
+    def _get_disk_info_gb(self) -> Tuple[int, int]:
         """Returns the total and used disk space in GB"""	
         disk = psutil.disk_usage('/')
         disk_size = disk.total // (1024 * 1024 * 1024)  # in GB
@@ -36,4 +38,3 @@ class HardwareInfo:
     def _get_cpu_usage(self) -> float:
         """Returns the CPU usage in percentage"""
         return psutil.cpu_percent(interval=0.5, percpu=False)
-
