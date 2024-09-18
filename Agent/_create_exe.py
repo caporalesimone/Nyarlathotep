@@ -3,6 +3,7 @@
 import os
 import subprocess
 import re
+import shutil
 
 def update_version_file(file_path) -> str:
     """ Update the version in the versions.py file """	
@@ -46,7 +47,7 @@ def main():
     command = [
         "pyinstaller",
         "--noconfirm",
-        "--onedir",
+        "--onefile",
         "--console",
         script_path
     ]
@@ -55,6 +56,24 @@ def main():
 
     print("Output:", result.stdout)
     print("Error:", result.stderr)
+
+    # Copy resources to the dist folder
+    resources_dir = os.path.join(current_dir, "resources")
+    output_dist_dir = os.path.join(output_path, "dist")
+
+    # Copy nssm.exe
+    nssm_exe_src = os.path.join(resources_dir, "nssm", "nssm.exe")
+    shutil.copy2(nssm_exe_src, output_dist_dir)
+
+    # Copy all .bat files
+    bat_file_src = os.path.join(resources_dir, "install_agent_as_service.bat")
+    shutil.copy2(bat_file_src, output_dist_dir)
+    bat_file_src = os.path.join(resources_dir, "remove_agent_service.bat")
+    shutil.copy2(bat_file_src, output_dist_dir)
+
+    # Rename the output folder agent with the version
+    os.rename(os.path.join(output_path, "dist"),
+              os.path.join(output_path, f"Agent_{version}"))
 
 if __name__ == "__main__":
     main()
