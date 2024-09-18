@@ -23,8 +23,6 @@ function extractUsersTable(data) {
     `).join('');
 }
 
-
-
 function fetchStatus() {
     fetch('/status_data')
         .then(response => response.json())
@@ -94,7 +92,7 @@ function fetchStatus() {
                             </tr>
                         </thead>
                         <tbody>
-                            ${userRows.length > 0 ? userRows : '<tr><td colspan="2">Nessun dato disponibile</td></tr>'}
+                            ${userRows.length > 0 ? userRows : '<tr><td colspan="2" style="text-align: center;">No users logged in</td></tr>'}
                         </tbody>
                     </table>
 
