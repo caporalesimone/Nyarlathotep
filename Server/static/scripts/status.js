@@ -67,20 +67,20 @@ function fetchStatus() {
                     </div>
 
                     <div class="progress-bar-container">
-                        <div class="progress-bar-label">Storage</div>
-                        <div class="progress-bar storage-bar">
-                            <div class="progress-bar-bg"></div>
-                            <div class="progress-bar-fill" style="width: ${((json.details.hardware.disk_used_GB || 0) / json.details.hardware.disk_total_GB) * 100}%"></div>
-                            <div class="progress-bar-text">${json.details.hardware.disk_total_GB - (json.details.hardware.disk_used_GB || 0)} GB free of ${json.details.hardware.disk_total_GB} GB</div>
-                        </div>
-                    </div>
-
-                    <div class="progress-bar-container">
                         <div class="progress-bar-label">Memory</div>
                         <div class="progress-bar memory-bar">
                             <div class="progress-bar-bg"></div>
                             <div class="progress-bar-fill" style="width: ${json.details.hardware.ram_total_MB > 0 ? ((json.details.hardware.ram_used_MB || 0) / json.details.hardware.ram_total_MB) * 100 : 0}%"></div>
                             <div class="progress-bar-text">${json.details.hardware.ram_total_MB - (json.details.hardware.ram_used_MB || 0)} MB free of ${json.details.hardware.ram_total_MB} MB</div>
+                        </div>
+                    </div>
+
+                    <div class="progress-bar-container">
+                        <div class="progress-bar-label">Storage</div>
+                        <div class="progress-bar storage-bar">
+                            <div class="progress-bar-bg"></div>
+                            <div class="progress-bar-fill" style="width: ${((json.details.hardware.disk_used_GB || 0) / json.details.hardware.disk_total_GB) * 100}%"></div>
+                            <div class="progress-bar-text">${json.details.hardware.disk_total_GB - (json.details.hardware.disk_used_GB || 0)} GB free of ${json.details.hardware.disk_total_GB} GB</div>
                         </div>
                     </div>
 
