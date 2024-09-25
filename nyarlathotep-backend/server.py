@@ -66,15 +66,15 @@ def status_data():
 
     current_time = datetime.now(timezone.utc).timestamp()
 
-    # Aggiorna lo stato di timeout dei client
+    # Update the timed_out field for each client
     for details in client_data_map.values():
         details['timed_out'] = (current_time -
             details['last_update_epoch'] > CONSIDER_OFFLINE_AFTER_SECONDS)
 
-    # Crea un array di oggetti senza includere customName
+    # Creates an array of clients' data
     data_list = [details for details in client_data_map.values()]
 
-    # Ritorna la lista come JSON
+    # returns the array as JSON
     response = make_response(jsonify(data_list), 200)
     response.headers['Content-Type'] = 'application/json; charset=utf-8'
     return response
