@@ -1,0 +1,10 @@
+{
+    "python.defaultInterpreterPath": "${workspaceRoot}\\.venv\\Scripts\\python.exe",
+    "[python]": {
+        "editor.rulers": [90],
+        "editor.insertSpaces": true,
+        "editor.detectIndentation": false,
+        "editor.tabSize": 4,
+    }
+}
+    
