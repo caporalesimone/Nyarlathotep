@@ -30,8 +30,8 @@ def is_v1_higher_v2(version1, version2) -> bool:
 def client_update():
     """ Accept data from the client. """
 
-    global highest_agent_version
-    global client_data_map
+    global highest_agent_version # pylint: disable=W0603
+    global client_data_map # pylint: disable=W0602
 
     data = request.json
 
