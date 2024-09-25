@@ -1,8 +1,7 @@
 """ Simple server for receiving data from clients and serving it as JSON. """
 
-import os
-from datetime import datetime, timedelta, timezone
-from flask import Flask, request, jsonify, render_template, send_from_directory, make_response
+from datetime import datetime, timezone
+from flask import Flask, request, jsonify, make_response
 
 CONSIDER_OFFLINE_AFTER_SECONDS = 60
 
@@ -12,7 +11,7 @@ app = Flask(__name__)
 client_data_map = {}
 
 # Highest agent version found
-highest_agent_version = ""
+highest_agent_version : str = ""
 
 def is_v1_higher_v2(version1, version2) -> bool:
     """ Check if version1 is higher than version2. """
@@ -31,8 +30,8 @@ def is_v1_higher_v2(version1, version2) -> bool:
 def client_update():
     """ Accept data from the client. """
 
-    global client_data_map
     global highest_agent_version
+    global client_data_map
 
     data = request.json
 
@@ -43,6 +42,7 @@ def client_update():
 
     version = data.get("client_sw_version", "0.0.0")
     new_version_available = ""
+
     if highest_agent_version == "":
         highest_agent_version = version
     if is_v1_higher_v2(highest_agent_version, version):
@@ -50,30 +50,32 @@ def client_update():
     else:
         highest_agent_version = version
 
+    # Store the data in the dictionary
     client_data_map[client_name] = {
         "last_update_utc": datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S"),
         "last_update_epoch": datetime.now(timezone.utc).timestamp(),
-        "from_ip": request.remote_addr, # Client's IP
         "details": data,
         "new_version_available": new_version_available
     }
 
     return jsonify({"message": f"{client_name} update recorded"}), 200
 
-# Serve all the data from the clients as single JSON
 @app.route('/workstations_status', methods=['GET'])
 def status_data():
-    """ Serve all the data from the clients as single JSON. """	
+    """ Serve all the data from the clients as an array of JSON objects without customName. """	
 
     current_time = datetime.now(timezone.utc).timestamp()
 
-    for customName, details in client_data_map.items():
-        if current_time - details['last_update_epoch'] > CONSIDER_OFFLINE_AFTER_SECONDS:
-            details['timed_out'] = True
-        else:
-            details['timed_out'] = False
+    # Aggiorna lo stato di timeout dei client
+    for details in client_data_map.values():
+        details['timed_out'] = (current_time -
+            details['last_update_epoch'] > CONSIDER_OFFLINE_AFTER_SECONDS)
 
-    response = make_response(jsonify(client_data_map), 200)
+    # Crea un array di oggetti senza includere customName
+    data_list = [details for details in client_data_map.values()]
+
+    # Ritorna la lista come JSON
+    response = make_response(jsonify(data_list), 200)
     response.headers['Content-Type'] = 'application/json; charset=utf-8'
     return response
 
