@@ -58,7 +58,7 @@ def client_update():
         "new_version_available": new_version_available
     }
 
-    return jsonify({"message": f"{client_name} update recorded"}), 200
+    return jsonify({"message": f"update for {client_name} recorded"}), 200
 
 @app.route('/workstations_status', methods=['GET'])
 def status_data():
