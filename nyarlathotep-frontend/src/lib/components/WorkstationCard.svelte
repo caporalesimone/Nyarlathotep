@@ -3,10 +3,10 @@
 
   export let workstation_data: WorkstationStatus;
 
-  // Calcolo dello stato di workstation_busy
+  // Calculate workstation_busy status
   $: workstation_busy = workstation_data.details.users.some(user => user.logged);
 
-  // Calcola il tempo trascorso dall'ultimo aggiornamento quando offline
+  // Calculate time since last update when offline
   $: timeSinceLastUpdate = calculateTimeSince(workstation_data.last_update_epoch);
 
   function calculateTimeSince(lastUpdateEpoch: number): string {
@@ -30,19 +30,28 @@
 <style>
   .card {
     position: relative;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Ombra per effetto 3D */
-    border-radius: 8px; /* Angoli arrotondati */
-    background-color: #fff; /* Sfondo bianco per la card */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Shadow for 3D effect */
+    border-radius: 8px; /* Rounded corners */
+    background-color: var(--background); /* White background for the card */
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border 0.2s ease; /* Smooth transition for hover effect */
+    cursor: pointer; /* Change cursor to pointer */
+    border: 1px solid transparent; /* Default border, transparent */
   }
 
   .card.offline {
-    opacity: 0.5; /* Grigiato per l'effetto disabilitato */
-    filter: grayscale(100%); /* Ulteriore effetto grigiato */
+    opacity: 0.5; /* Grayed out for disabled effect */
+    filter: grayscale(100%); /* Additional gray effect */
+  }
+
+  .card:hover {
+    transform: scale(1.02); /* Slightly enlarge the card */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Enhanced shadow on hover */
+    border: 2px solid var(--primary-color); /* Blue border on hover */
   }
 
   .card-header {
     display: flex;
-    align-items: center; /* Allinea verticalmente il contenuto al centro */
+    align-items: center; /* Center align items vertically */
     margin: 0;
   }
 

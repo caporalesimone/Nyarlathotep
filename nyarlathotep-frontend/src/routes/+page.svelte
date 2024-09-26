@@ -3,6 +3,8 @@
   
   import type { WorkstationStatus } from '../types';
   
+  import '../styles/main-colors.css';
+
   import WorkstationCard from '../lib/components/WorkstationCard.svelte';
   import HeaderBar from '$lib/components/HeaderBar.svelte';
   import BottomBar from '$lib/components/BottomBar.svelte';
@@ -34,6 +36,7 @@
     fetchWorkstations();
     setInterval(fetchWorkstations, refreshInterval);
   });
+  
 </script>
 
 <main>

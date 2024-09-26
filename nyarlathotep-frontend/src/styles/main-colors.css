@@ -1,0 +1,19 @@
+
+/* Default theme (Light Theme) */
+:root {
+    --primary-color: #32cd32;
+    --secondary-color: #429fde;
+    --background: white;
+ }
+  
+/* Dark theme */
+[data-theme="dark"] {
+    --primary-color: red;
+    --secondary-color: yellow;
+    --background: black;
+}
+
+body {
+    background-color: var(--background);
+}
+  
