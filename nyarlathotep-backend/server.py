@@ -38,7 +38,10 @@ def client_update():
     # client_name is required
     if "client_name" not in data:
         return jsonify({"error": "Missing key: client_name"}), 400
-    client_name = data["client_name"]
+    
+    # client_name is the map key. This is not the best solution but now is ok.
+    # It should be a unique identifier for the client.
+    client_name = data["client_name"].lower() 
 
     version = data.get("client_sw_version", "0.0.0")
     new_version_available = ""
