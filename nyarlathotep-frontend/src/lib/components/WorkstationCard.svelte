@@ -72,9 +72,9 @@
 </style>
 
 <div class="card mb-3 {workstation_data.timed_out ? 'offline' : ''}">
-  <div class="card-header">
-    <h5 class="card-title">{workstation_data.details.client_name}</h5>
-    <div class="led { workstation_busy == false ? 'green' : ''}"></div>
+  <div class="card-header d-flex justify-content-between align-items-center">
+    <h5 class="mb-0">{workstation_data.details.client_name}</h5>
+    <div class={`led ${workstation_busy == false ? 'green' : ''}`}></div>
   </div>
   
   <div class="card-body">
@@ -88,6 +88,13 @@
       {#if workstation_busy}
         <br />
         Logged user: <strong>{workstation_data.details.users.filter(user => user.logged).map(user => user.username).join(', ')}</strong>
+      {:else}
+        <br />
+        {#if workstation_data.timed_out}
+          Workstation is offline
+        {:else}
+          Workstation is available
+        {/if}
       {/if}
 
     </p>
