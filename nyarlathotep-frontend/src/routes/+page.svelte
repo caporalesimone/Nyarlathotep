@@ -1,8 +1,15 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import WorkstationCard from '../lib/components/WorkstationCard.svelte';
+  
   import type { WorkstationStatus } from '../types';
+  
+  import WorkstationCard from '../lib/components/WorkstationCard.svelte';
   import HeaderBar from '$lib/components/HeaderBar.svelte';
+  import BottomBar from '$lib/components/BottomBar.svelte';
+
+  const refreshInterval = 10000; // Refresh time of the page in milliseconds
+
+  let resetProgressBar: boolean = false;
 
   let workstations: WorkstationStatus[] = [];
 
@@ -10,7 +17,14 @@
     try {
       const response = await fetch('/workstations_status');
       const data = await response.json();
-      workstations = data as WorkstationStatus[]; // Ora è un array di WorkstationStatus
+
+      // This allows svelte to re-render the component
+      workstations = [...data]; 
+
+      // Resets the progress bar
+      resetProgressBar = true;
+      setTimeout(() => resetProgressBar = false, 100);
+
     } catch (error) {
       console.error('Error fetching workstations:', error);
     }
@@ -18,7 +32,7 @@
 
   onMount(() => {
     fetchWorkstations();
-    setInterval(fetchWorkstations, 15000); // Aggiorna ogni 15 secondi
+    setInterval(fetchWorkstations, refreshInterval);
   });
 </script>
 
@@ -33,4 +47,5 @@
       {/each}
     </div>
   </div>
+  <BottomBar totalTime={refreshInterval} resetProgressBar={resetProgressBar}/>
 </main>
