@@ -9,7 +9,7 @@
   import HeaderBar from '$lib/components/HeaderBar.svelte';
   import BottomBar from '$lib/components/BottomBar.svelte';
 
-  const refreshInterval = 10000; // Refresh time of the page in milliseconds
+  const refreshInterval = 5 * 1000; // Refresh time of the page in milliseconds
 
   let resetProgressBar: boolean = false;
 

@@ -12,28 +12,34 @@
   .details-card {
     background-color: var(--card-background);
     border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(100, 5, 5, 0.2);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
     padding: 20px;
     width: 80vw;
     max-width: 600px;
     max-height: 80vh;
     overflow-y: auto;
     position: relative;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #333;
   }
 
-  .progress-bar {
-    background-color: lightgray;
-    border-radius: 4px;
-    width: 100%;
-    height: 20px;
-    margin-bottom: 10px;
-    position: relative;
+  h3 {
+    font-size: 1.8em;
+    color: #007bff;
   }
 
-  .progress-fill {
-    background-color: green;
-    height: 100%;
-    border-radius: 4px;
+  strong {
+    font-weight: bold;
+    color: #495057;
+  }
+
+  .section-title {
+    margin-top: 20px;
+    font-size: 1.3em;
+    font-weight: bold;
+    color: #495057;
+    border-bottom: 2px solid var(--primary-color);
+    padding-bottom: 5px;
   }
 
   table {
@@ -43,18 +49,53 @@
   }
 
   table, th, td {
-    border: 1px solid black;
+    border: 1px solid #dee2e6;
   }
 
   th, td {
-    padding: 8px;
+    padding: 10px;
     text-align: left;
+    font-size: 0.9em;
   }
 
-  .section-title {
-    margin-top: 20px;
-    font-size: 1.2em;
+  th {
+    background-color: #f8f9fa;
+    color: #495057;
+    font-weight: 600;
+    border-bottom: 2px solid var(--primary-color);;
+  }
+
+  tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+
+  .progress-bar {
+    background-color: #e9ecef;
+    border-radius: 4px;
+    width: 100%;
+    height: 24px;
+    margin-bottom: 10px;
+    position: relative;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+
+  .progress-fill {
+    background-color: #28a745;
+    height: 100%;
+    border-radius: 4px;
+    text-align: center;
+    line-height: 24px;
+    color: white;
     font-weight: bold;
+    font-size: 0.85em;
+    transition: width 0.3s ease;
+  }
+
+  small {
+    display: block;
+    font-size: 0.85em;
+    color: #6c757d;
+    margin-bottom: 10px;
   }
 </style>
 
@@ -83,20 +124,26 @@
   <!-- CPU Usage -->
   <strong>CPU Usage:</strong>
   <div class="progress-bar">
-    <div class="progress-fill" style="width: {workstation_data.details.hardware.cpu_usage}%"></div>
+    <div class="progress-fill" style="width: {workstation_data.details.hardware.cpu_usage}%">
+      {workstation_data.details.hardware.cpu_usage}%
+    </div>
   </div>
   
   <!-- RAM Usage -->
   <strong>RAM Usage:</strong>
   <div class="progress-bar">
-    <div class="progress-fill" style="width: {calculatePercentage(workstation_data.details.hardware.ram_used_MB, workstation_data.details.hardware.ram_total_MB)}%"></div>
+    <div class="progress-fill" style="width: {calculatePercentage(workstation_data.details.hardware.ram_used_MB, workstation_data.details.hardware.ram_total_MB)}%">
+      {calculatePercentage(workstation_data.details.hardware.ram_used_MB, workstation_data.details.hardware.ram_total_MB).toFixed(1)}%
+    </div>
   </div>
   <small>{workstation_data.details.hardware.ram_used_MB} MB / {workstation_data.details.hardware.ram_total_MB} MB</small>
   
   <!-- Disk Usage -->
   <strong>Disk Usage:</strong>
   <div class="progress-bar">
-    <div class="progress-fill" style="width: {calculatePercentage(workstation_data.details.hardware.disk_used_GB, workstation_data.details.hardware.disk_total_GB)}%"></div>
+    <div class="progress-fill" style="width: {calculatePercentage(workstation_data.details.hardware.disk_used_GB, workstation_data.details.hardware.disk_total_GB)}%">
+      {calculatePercentage(workstation_data.details.hardware.disk_used_GB, workstation_data.details.hardware.disk_total_GB).toFixed(1)}%
+    </div>
   </div>
   <small>{workstation_data.details.hardware.disk_used_GB} GB / {workstation_data.details.hardware.disk_total_GB} GB</small>
 

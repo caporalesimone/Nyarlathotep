@@ -32,12 +32,12 @@
     left: 0;
     width: 100%;
     height: 10px;
-    background-color: #e0e0e0;
+    background-color: var(--background-color);
   }
 
   .progress {
     height: 100%;
-    background-color: #32cd32;
+    background-color: var(--primary-color);
     transition: width 1s linear;
   }
 </style>
