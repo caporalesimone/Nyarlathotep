@@ -4,13 +4,15 @@
     --primary-color: #32cd32;
     --secondary-color: #429fde;
     --background: white;
+    --card-background: white;
  }
   
 /* Dark theme */
 [data-theme="dark"] {
-    --primary-color: red;
-    --secondary-color: yellow;
+    --primary-color: #32cd32;;
+    --secondary-color: #429fde;;
     --background: black;
+    --card-background: white;
 }
 
 body {
