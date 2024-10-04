@@ -1,5 +1,5 @@
 # nyarlathotep-frontend/Dockerfile
-FROM node:20-alpine3.19
+FROM node:20.17.0-alpine3.20
 
 WORKDIR /app
 
@@ -11,7 +11,6 @@ COPY . .
 # Expose port 4173
 EXPOSE 4173
 
-# Costruisci l'app
 RUN npm run build
 
-CMD ["npm", "run", "preview"]
+CMD ["npm", "run", "preview", "--", "--host"]

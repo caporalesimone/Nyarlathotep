@@ -7,12 +7,33 @@ export default defineConfig({
 });
 */
 
+// export default defineConfig({
+//   plugins: [sveltekit()],
+//   server: {
+//     proxy: {
+//       '/workstations_status': {
+//         target: 'http://localhost:8080/workstations_status',
+//         changeOrigin: true,
+//         rewrite: (path) => path.replace(/^\/workstations_status/, '')
+//       }
+//     }
+//   }
+// });
+
+// Usa NODE_ENV per determinare l'URL del backend
+const backendUrl =
+  process.env.NODE_ENV === 'development'
+    ? 'http://localhost:8080'
+    : 'http://nyarlathotep-backend:8080';
+
+// Environment variable
+console.log("Backend URL: " + process.env.VITE_BACKEND_URL);
 export default defineConfig({
   plugins: [sveltekit()],
   server: {
     proxy: {
       '/workstations_status': {
-        target: 'http://localhost:8080/workstations_status',
+        target: backendUrl + '/workstations_status',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/workstations_status/, '')
       }
