@@ -15,7 +15,7 @@ services:
       context: ./nyarlathotep-frontend
       dockerfile: Dockerfile
     ports:
-      - "4173:4173"
+      - "80:4173"
     networks:
       - nyarlathotep-network
 

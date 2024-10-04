@@ -40,7 +40,7 @@
 </script>
 
 <main>
-  <HeaderBar version="1.0.1"/>
+  <HeaderBar version="2.0.0"/>
   <div class="container mt-4">
     <div class="row">
       {#each workstations as workstation}
