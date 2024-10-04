@@ -27,7 +27,7 @@ const backendUrl =
     : 'http://nyarlathotep-backend:8080';
 
 // Environment variable
-console.log("Backend URL: " + process.env.VITE_BACKEND_URL);
+console.log("Backend URL: " + backendUrl);
 export default defineConfig({
   plugins: [sveltekit()],
   server: {
