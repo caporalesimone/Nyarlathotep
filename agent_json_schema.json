@@ -1,0 +1,129 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {
+        "client_name": {
+            "type": "string"
+        },
+        "client_sw_version": {
+            "type": "string",
+            "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+        },
+        "hardware": {
+            "type": "object",
+            "properties": {
+                "cpu_usage": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 100
+                },
+                "disk_total_GB": {
+                    "type": "integer",
+                    "minimum": 0
+                },
+                "disk_used_GB": {
+                    "type": "integer",
+                    "minimum": 0
+                },
+                "ram_total_MB": {
+                    "type": "integer",
+                    "minimum": 0
+                },
+                "ram_used_MB": {
+                    "type": "integer",
+                    "minimum": 0
+                }
+            },
+            "required": ["cpu_usage", "disk_total_GB", "disk_used_GB", "ram_total_MB", "ram_used_MB"],
+            "additionalProperties": false
+        },
+        "hostname": {
+            "type": "string"
+        },
+        "json_version": {
+            "type": "string",
+            "pattern": "^[0-9]+\\.[0-9]+$"
+        },
+        "local_time": {
+            "type": "string"
+        },
+        "net_interfaces": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "interface": {
+                        "type": "string"
+                    },
+                    "ip_addresses": {
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "pattern": "^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$"
+                        }
+                    },
+                    "mac": {
+                        "type": "string",
+                        "pattern": "^([0-9A-Fa-f]{2}-){5}[0-9A-Fa-f]{2}$"
+                    }
+                },
+                "required": ["interface", "ip_addresses", "mac"],
+                "additionalProperties": false
+            }
+        },
+        "network_name": {
+            "type": "string"
+        },
+        "os": {
+            "type": "object",
+            "properties": {
+                "os_name": {
+                    "type": "string"
+                },
+                "os_platform": {
+                    "type": "string"
+                },
+                "uptime": {
+                    "type": "string"
+                }
+            },
+            "required": ["os_name", "os_platform", "uptime"],
+            "additionalProperties": false
+        },
+        "users": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "idle_time": {
+                        "type": "string",
+                        "pattern": "^([0-9]+:[0-9]{2})$"
+                    },
+                    "logged": {
+                        "type": "boolean"
+                    },
+                    "login_time": {
+                        "type": "string",
+                        "pattern": "^(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[0-2])/[0-9]{4} [0-2][0-9]:[0-5][0-9]$"
+                    },
+                    "session_id": {
+                        "type": "string"
+                    },
+                    "session_name": {
+                        "type": "string"
+                    },
+                    "status": {
+                        "type": "string"
+                    },
+                    "username": {
+                        "type": "string"
+                    }
+                },
+                "required": ["idle_time", "logged", "login_time", "session_id", "session_name", "status", "username"],
+                "additionalProperties": false
+            }
+        }
+    },
+    "required": ["client_name", "client_sw_version", "hardware", "hostname", "json_version", "local_time", "net_interfaces", "network_name", "os", "users"],
+    "additionalProperties": false
+}
