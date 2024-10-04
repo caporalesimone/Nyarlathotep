@@ -16,3 +16,7 @@ Backend server is a flask web server with 2 main route
 ## Frontend 
 Frontend is written using node js, typescript and Svelte framework
 
+## Screenshots
+
+![home](.assets/home.jpg)
+![details](.assets/details.jpg)
