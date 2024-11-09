@@ -50,5 +50,7 @@
       {/each}
     </div>
   </div>
+  <!--
   <BottomBar totalTime={refreshInterval} resetProgressBar={resetProgressBar}/>
+  -->
 </main>
