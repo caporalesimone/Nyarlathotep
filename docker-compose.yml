@@ -7,6 +7,7 @@ services:
       - "8080:8080"
     networks:
       - nyarlathotep-network
+    restart: always
 
   nyarlathotep-frontend:
     build:
@@ -16,6 +17,7 @@ services:
       - "80:4173"
     networks:
       - nyarlathotep-network
+    restart: always
 
 networks:
   nyarlathotep-network:
