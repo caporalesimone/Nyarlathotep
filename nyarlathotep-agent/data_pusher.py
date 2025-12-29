@@ -9,11 +9,12 @@ from versions import JSON_VERSION
 class DataPusher:
     """DataPusher class is responsible for sending the data to the remote server."""
 
-    def __init__(self, client_sw_version, client_name, remote_server_url) -> None:
+    def __init__(self, client_sw_version, client_name, remote_server_url, project_name) -> None:
         self.client_sw_version = client_sw_version
         self.json_version = JSON_VERSION
         self.client_name = client_name
         self.remote_server_url = remote_server_url
+        self.project_name = project_name
         self.collected_data = {}
         self.last_json = None
 
@@ -26,6 +27,7 @@ class DataPusher:
             "client_sw_version": self.client_sw_version,
             "local_time": time.strftime('%Y-%m-%d %H:%M:%S', time.localtime()),
             "json_version": self.json_version,
+            "project_name": self.project_name,
             "hostname": data.hostname,
             "network_name": data.network_name,
             "net_interfaces": data.net_interfaces,

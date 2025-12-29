@@ -74,6 +74,9 @@
         "network_name": {
             "type": "string"
         },
+        "project_name": {
+            "type": "string"
+        },
         "os": {
             "type": "object",
             "properties": {
@@ -124,6 +127,6 @@
             }
         }
     },
-    "required": ["client_name", "client_sw_version", "hardware", "hostname", "json_version", "local_time", "net_interfaces", "network_name", "os", "users"],
+    "required": ["client_name", "client_sw_version", "hardware", "hostname", "json_version", "local_time", "net_interfaces", "network_name", "project_name", "os", "users"],
     "additionalProperties": false
 }
