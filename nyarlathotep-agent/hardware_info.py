@@ -2,6 +2,7 @@
 from typing import Tuple
 import platform
 import subprocess
+import wmi
 import psutil
 
 class HardwareInfo:
@@ -15,9 +16,12 @@ class HardwareInfo:
     def _get_machine_serial_number(self) -> str:
         """Returns the machine's serial number"""
         if platform.system() == 'Windows':
-            output = subprocess.check_output('wmic bios get serialnumber', shell=True)
-            serial_number = output.decode().strip().rsplit('\n', maxsplit=1)[-1]
-            return serial_number
+            try:
+                computer = wmi.WMI()
+                bios = computer.Win32_BIOS()[0]
+                return bios.SerialNumber.strip() if bios.SerialNumber else "N/A"
+            except Exception:
+                return "N/A"
         else:
             return "N/A"
 
