@@ -41,6 +41,11 @@ export default defineConfig({
         target: backendUrl + '/client_update',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/client_update/, '')
+      },
+      '/version': {
+        target: backendUrl + '/version',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/version/, '')
       }
     }
   }

@@ -4,6 +4,8 @@
   import type { WorkstationStatus } from '../types';
   
   import '../styles/main-colors.css';
+  import { FRONTEND_VERSION } from '$lib/version';
+  import { apiUrl } from '$lib/config';
 
   import WorkstationCard from '$lib/components/WorkstationCard.svelte';
   import HeaderBar from '$lib/components/HeaderBar.svelte';
@@ -14,6 +16,7 @@
   let resetProgressBar: boolean = false;
   let workstations: WorkstationStatus[] = [];
   let expandedProjects: Record<string, boolean> = {};
+  let backendVersion: string = "loading...";
 
   // Group workstations by project_name
   $: workstationsByProject = (() => {
@@ -51,7 +54,7 @@
 
   async function fetchWorkstations() {
     try {
-      const response = await fetch('/workstations_status');
+      const response = await fetch(apiUrl('/workstations_status'));
       const data = await response.json();
 
       // Extract workstations from the response
@@ -75,14 +78,27 @@
   }
 
   onMount(() => {
+    fetchBackendVersion();
     fetchWorkstations();
     setInterval(fetchWorkstations, refreshInterval);
   });
   
+  async function fetchBackendVersion() {
+    try {
+      const res = await fetch(apiUrl('/version'));
+      if (!res.ok) throw new Error('bad status');
+      const data = await res.json();
+      backendVersion = data.backend_version || 'unknown';
+    } catch (e) {
+      console.error('Error fetching backend version:', e);
+      backendVersion = 'unreachable';
+    }
+  }
+  
 </script>
 
 <main>
-  <HeaderBar version="2.2.0"/>
+  <HeaderBar frontendVersion={FRONTEND_VERSION} backendVersion={backendVersion}/>
   <div class="container mt-4">
     {#each projectsWithWorkstations as projectName}
       {@const projectWorkstations = workstationsByProject[projectName]}

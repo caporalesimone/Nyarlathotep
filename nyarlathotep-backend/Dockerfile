@@ -10,8 +10,8 @@ COPY requirements.txt .
 # Install project dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy the server.py file to the working directory
-COPY server.py .
+# Copy application files
+COPY server.py versions.py ./
 
 # Expose port 8080
 EXPOSE 8080

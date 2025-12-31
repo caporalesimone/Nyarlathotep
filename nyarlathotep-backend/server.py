@@ -2,10 +2,14 @@
 
 from datetime import datetime, timezone
 from flask import Flask, request, jsonify, make_response
+from versions import BACKEND_VERSION
 
 CONSIDER_OFFLINE_AFTER_SECONDS = 60
 
 app = Flask(__name__)
+
+# Log backend version at startup
+print(f"Nyarlathotep backend version: {BACKEND_VERSION}")
 
 # Dictionary for store all the data from the clients (by client_name field)
 client_data_map = {}
@@ -85,6 +89,12 @@ def status_data():
     response = make_response(jsonify(response_data), 200)
     response.headers['Content-Type'] = 'application/json; charset=utf-8'
     return response
+
+
+@app.route('/version', methods=['GET'])
+def get_version():
+    """Return backend version info."""
+    return jsonify({"backend_version": BACKEND_VERSION}), 200
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8080, debug=True)

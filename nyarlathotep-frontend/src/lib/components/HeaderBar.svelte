@@ -1,5 +1,6 @@
 <script lang="ts">
-  export let version: string;
+  export let frontendVersion: string;
+  export let backendVersion: string;
 
   let theme = "light"; // Default theme
 
@@ -29,7 +30,7 @@
 
   <div class="title-section">
     <div class="title-text">Nyarlathotep - Workstations Monitor</div>
-    <div class="version">Version: {version}</div>
+    <div class="version">Frontend: {frontendVersion} - Backend: {backendVersion}</div>
   </div>
 
   <div class="theme-changer">
