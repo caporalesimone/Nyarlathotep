@@ -11,7 +11,7 @@ def main():
     print("Starting agent ...")
     print("Software version: " + CLIENT_SW_VERSION)
     config = ConfigFile()
-    data = DataPusher(CLIENT_SW_VERSION, config.custom_name, config.remote_server_url)
+    data = DataPusher(CLIENT_SW_VERSION, config.custom_name, config.remote_server_url, config.project_name)
 
     while True:
         start_time = time.time()

@@ -40,6 +40,7 @@ export interface WorkstationDetails {
   network_name: string;
   os: OS;
   users: User[];
+  project_name: string;
 }
 
 export interface WorkstationStatus {

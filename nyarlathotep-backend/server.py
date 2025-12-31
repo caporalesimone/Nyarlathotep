@@ -65,7 +65,7 @@ def client_update():
 
 @app.route('/workstations_status', methods=['GET'])
 def status_data():
-    """ Serve all the data from the clients as an array of JSON objects without customName. """	
+    """ Serve all the data from the clients as an array of JSON objects with metadata. """	
 
     current_time = datetime.now(timezone.utc).timestamp()
 
@@ -77,8 +77,12 @@ def status_data():
     # Creates an array of clients' data
     data_list = [details for details in client_data_map.values()]
 
-    # returns the array as JSON
-    response = make_response(jsonify(data_list), 200)
+    # Returns workstations data
+    response_data = {
+        "workstations": data_list
+    }
+
+    response = make_response(jsonify(response_data), 200)
     response.headers['Content-Type'] = 'application/json; charset=utf-8'
     return response
 

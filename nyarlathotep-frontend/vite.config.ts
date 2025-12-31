@@ -36,6 +36,11 @@ export default defineConfig({
         target: backendUrl + '/workstations_status',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/workstations_status/, '')
+      },
+      '/client_update': {
+        target: backendUrl + '/client_update',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/client_update/, '')
       }
     }
   }
