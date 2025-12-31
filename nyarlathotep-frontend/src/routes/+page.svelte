@@ -34,15 +34,12 @@
   // Get all project names that have workstations (sorted)
   $: projectsWithWorkstations = Object.keys(workstationsByProject).sort();
 
-  // Initialize expanded state for new projects (default: first project expanded)
+  // Initialize expanded state for new projects (default: all projects expanded)
   $: {
-    if (projectsWithWorkstations.length > 0 && Object.keys(expandedProjects).length === 0) {
-      expandedProjects[projectsWithWorkstations[0]] = true;
-    }
-    // Ensure all current projects have an expanded state
+    // Ensure all current projects have an expanded state (default: true)
     projectsWithWorkstations.forEach(projectName => {
       if (!(projectName in expandedProjects)) {
-        expandedProjects[projectName] = false;
+        expandedProjects[projectName] = true;
       }
     });
   }
