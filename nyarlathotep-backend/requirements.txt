@@ -1,1 +1,2 @@
 Flask==3.0.3
+jsonschema==4.23.0

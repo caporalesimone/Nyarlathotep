@@ -99,7 +99,8 @@ def generate_hardware_info():
         "ram_total_MB": random.choice([4096, 8192, 16384, 32768]),
         "ram_used_MB": random.randint(1024, 24576),
         "disk_total_GB": random.choice([256, 512, 1024, 2048]),
-        "disk_used_GB": random.randint(50, 1500)
+        "disk_used_GB": random.randint(50, 1500),
+        "serial_number": ''.join(random.choices('ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789', k=12))
     }
 
 

@@ -32,9 +32,12 @@
                 "ram_used_MB": {
                     "type": "integer",
                     "minimum": 0
+                },
+                "serial_number": {
+                    "type": "string"
                 }
             },
-            "required": ["cpu_usage", "disk_total_GB", "disk_used_GB", "ram_total_MB", "ram_used_MB"],
+            "required": ["cpu_usage", "disk_total_GB", "disk_used_GB", "ram_total_MB", "ram_used_MB", "serial_number"],
             "additionalProperties": false
         },
         "hostname": {

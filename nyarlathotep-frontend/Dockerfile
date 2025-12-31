@@ -3,11 +3,11 @@ FROM node:20.17.0-alpine3.20
 
 WORKDIR /app
 
-COPY package*.json ./
+COPY nyarlathotep-frontend/package*.json .
 
 RUN npm install
 
-COPY . . 
+COPY nyarlathotep-frontend/. . 
 
 RUN npm run build
 

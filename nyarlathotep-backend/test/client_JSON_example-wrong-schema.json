@@ -1,5 +1,5 @@
 {
-  "client_name": "Example",
+  "_client_name": "Example",
   "client_sw_version": "1.6.2",
   "hardware": {
     "cpu_usage": 15.8,

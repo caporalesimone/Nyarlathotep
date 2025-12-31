@@ -1,7 +1,12 @@
 """ Simple server for receiving data from clients and serving it as JSON. """
 
+import json
 from datetime import datetime, timezone
+from pathlib import Path
+
 from flask import Flask, request, jsonify, make_response
+from jsonschema import validate, ValidationError
+
 from versions import BACKEND_VERSION
 
 CONSIDER_OFFLINE_AFTER_SECONDS = 60
@@ -16,6 +21,22 @@ client_data_map = {}
 
 # Highest agent version found
 highest_agent_version : str = ""
+
+
+def load_schema() -> dict:
+    """Load JSON schema from local or parent directory."""
+    candidates = [
+        Path(__file__).resolve().parent / "agent_json_schema.json",
+        Path(__file__).resolve().parent.parent / "agent_json_schema.json",
+    ]
+    for candidate in candidates:
+        if candidate.exists():
+            with open(candidate, "r", encoding="utf-8") as f:
+                return json.load(f)
+    raise FileNotFoundError("agent_json_schema.json not found in expected locations")
+
+
+AGENT_SCHEMA = load_schema()
 
 def is_v1_higher_v2(version1, version2) -> bool:
     """ Check if version1 is higher than version2. """
@@ -38,6 +59,17 @@ def client_update():
     global client_data_map # pylint: disable=W0602
 
     data = request.json
+
+    if data is None:
+        return jsonify({"error": "Request body must be JSON"}), 400
+
+    # Validate payload against schema
+    try:
+        validate(instance=data, schema=AGENT_SCHEMA)
+    except ValidationError as exc:
+        client_name = data.get("client_name", "<unknown>") if isinstance(data, dict) else "<unknown>"
+        print(f"[VALIDATION] Invalid payload from {client_name}: {exc.message}")
+        return jsonify({"error": "Invalid payload", "details": exc.message}), 400
 
     # client_name is required
     if "client_name" not in data:

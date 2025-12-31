@@ -1,8 +1,8 @@
 services:
   nyarlathotep-backend:
     build:
-      context: ./nyarlathotep-backend
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: ./nyarlathotep-backend/Dockerfile
     ports:
       - "8080:8080"
     networks:
@@ -11,8 +11,8 @@ services:
 
   nyarlathotep-frontend:
     build:
-      context: ./nyarlathotep-frontend
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: ./nyarlathotep-frontend/Dockerfile
     ports:
       - "80:4173"
     networks:
