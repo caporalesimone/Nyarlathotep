@@ -45,7 +45,17 @@
 >
   <div class="card-header d-flex justify-content-between align-items-center">
     <h5 class="mb-0">{workstation_data.details.client_name}</h5>
-    <div class={`led ${workstation_busy == false ? "green" : ""}`}></div>
+    <div class="status-icons">
+      {#if workstation_data.new_version_available}
+        <div
+          class="update-badge"
+          title={`New client version ${workstation_data.new_version_available} available`}
+        >
+          <i class="bi bi-cloud-arrow-up"></i>
+        </div>
+      {/if}
+      <div class={`led ${workstation_busy == false ? "green" : ""}`}></div>
+    </div>
   </div>
 
   <div class="card-body">
@@ -133,6 +143,26 @@
 
   .led.green {
     background-color: #32cd32; /* Green */
+  }
+
+  .status-icons {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+  }
+
+  .update-badge {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: lightgray;
+    color: #000;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #fff;
+    font-size: 12px;
+    line-height: 1;
   }
 
   .status {
