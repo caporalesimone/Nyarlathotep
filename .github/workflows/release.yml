@@ -103,6 +103,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: agent-binary-windows
+          path: ./artifacts
 
       - name: Get agent version
         id: agent_version
@@ -143,7 +144,7 @@ jobs:
             ### Windows Agent
             Download the agent binary and follow installation instructions in the README.
           files: |
-            nyarlathotep-agent-*.zip
+            artifacts/**/*.zip
           draft: false
           prerelease: false
         env:
