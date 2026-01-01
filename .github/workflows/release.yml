@@ -123,6 +123,4 @@ jobs:
             
             - **HTTP**: http://localhost
             - **HTTPS**: https://localhost (accept self-signed certificate warning)
-
-            - HTTP: http://localhost
-            - HTTPS: https://localhost (self-signed certificate)
+            
