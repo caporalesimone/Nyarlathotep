@@ -108,7 +108,7 @@ jobs:
         id: agent_version
         run: |
           cd nyarlathotep-agent
-          VERSION=$(python -c "from versions import AGENT_VERSION; print(AGENT_VERSION)")
+          VERSION=$(python -c "from versions import CLIENT_SW_VERSION; print(CLIENT_SW_VERSION)")
           echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
 
       - name: Get container image tags
