@@ -31,7 +31,7 @@ services:
     ports:
       - "80:80"
       - "443:443"
-    restart: always
+    restart: unless-stopped
 ```
 
 Then run:
