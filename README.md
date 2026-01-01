@@ -77,5 +77,5 @@ It requests the `workstations_status` from the backend and does all the presenta
 
 ## Screenshots
 
-![home](.docs-files/home.jpg)
-![details](.docs-files/details.jpg)
+![home](./doc-files/home.jpg)
+![details](./doc-files/details.jpg)
