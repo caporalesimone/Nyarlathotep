@@ -29,6 +29,9 @@ const backendUrl =
 // Environment variable
 console.log("Backend URL: " + backendUrl);
 export default defineConfig({
+  build: {
+    outDir: 'build'
+  },
   plugins: [sveltekit()],
   server: {
     proxy: {

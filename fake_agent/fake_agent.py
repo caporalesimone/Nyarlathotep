@@ -21,8 +21,8 @@ MIN_GROUP_RATIO = 0.10  # Min 10% of NUM_CLIENTS
 MAX_GROUP_RATIO = 0.50  # Max 50% of NUM_CLIENTS
 GROUP_PREFIX = "Group"  # Prefix for project/group names
 INTERVAL_SECONDS = 10  # Interval used in continuous mode
-BACKEND_URL = "http://localhost:8080"
-ENDPOINT = "/client_update"
+BACKEND_URL = "http://localhost"  # nginx reverse proxy (HTTP:80 or HTTPS:443)
+ENDPOINT = "/api/client_update"
 
 
 fake = Faker()

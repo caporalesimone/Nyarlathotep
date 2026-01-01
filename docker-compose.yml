@@ -1,20 +1,13 @@
 services:
-  nyarlathotep-backend:
+  nyarlathotep:
+    container_name: nyarlathotep
+    image: nyarlathotep:latest
     build:
       context: .
-      dockerfile: ./nyarlathotep-backend/Dockerfile
+      dockerfile: Dockerfile
     ports:
-      - "8080:8080"
-    networks:
-      - nyarlathotep-network
-    restart: always
-
-  nyarlathotep-frontend:
-    build:
-      context: .
-      dockerfile: ./nyarlathotep-frontend/Dockerfile
-    ports:
-      - "80:4173"
+      - "80:80"
+      - "443:443"
     networks:
       - nyarlathotep-network
     restart: always

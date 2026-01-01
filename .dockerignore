@@ -1,0 +1,57 @@
+# Git files
+.git
+.gitignore
+
+# IDE
+.vscode
+.idea
+*.swp
+*.swo
+*~
+
+# Python
+__pycache__
+*.py[cod]
+*$py.class
+*.egg-info
+.env
+.venv
+venv/
+
+# Node
+node_modules
+npm-debug.log
+yarn-debug.log
+
+# Build outputs
+dist/
+build/
+.svelte-kit/
+.next/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Test files
+*.bak
+*.tmp
+
+# Docker
+.docker
+docker-compose.override.yml
+
+# Logs
+*.log
+logs/
+
+# Dependencies cache (already installed in image)
+*.lock
+
+# Documentation
+docs/
+*.md
+
+# Temporary
+temp/
+tmp/

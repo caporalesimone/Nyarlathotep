@@ -8,7 +8,7 @@ CONFIG_FILE = 'config.ini'
 # Default values
 DEFAULT_CUSTOM_NAME = "WORKSTATION"
 DEFAULT_UPDATE_INTERVAL = 30  # in seconds
-DEFAULT_REMOTE_SERVER_URL = "http://localhost:8080/client_update"
+DEFAULT_REMOTE_SERVER_URL = "http://localhost/api/client_update"
 DEFAULT_PROJECT_NAME = "PROJECT_1"
 
 class ConfigFile:

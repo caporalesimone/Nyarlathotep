@@ -2,6 +2,7 @@
 	"extends": "./.svelte-kit/tsconfig.json",
 	"compilerOptions": {
 		"module": "ESNext",
+		"lib": ["ES2015", "DOM"],
 		"allowJs": true,
 		"checkJs": true,
 		"esModuleInterop": true,
