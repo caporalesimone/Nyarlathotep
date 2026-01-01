@@ -4,7 +4,7 @@
   import type { WorkstationStatus } from '../types';
   
   import '../styles/main-colors.css';
-  import { FRONTEND_VERSION } from '$lib/version';
+  import { FRONTEND_VERSION } from '../version';
   import { apiUrl } from '$lib/config';
 
   import WorkstationCard from '$lib/components/WorkstationCard.svelte';
