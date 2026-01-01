@@ -2,6 +2,7 @@ services:
   nyarlathotep:
     container_name: nyarlathotep
     image: nyarlathotep:latest
+    pull_policy: build
     build:
       context: .
       dockerfile: Dockerfile
