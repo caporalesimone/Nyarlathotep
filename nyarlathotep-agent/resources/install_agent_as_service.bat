@@ -20,7 +20,9 @@ if %errorlevel% == 0 (
 
 echo Installing Nyarlathotep Agent as a service
 
-set "appPath=%~dp0agent.exe"
+rem Trova l'eseguibile Agent_*.exe (con versione)
+for %%f in ("%~dp0Agent_*.exe") do set "appPath=%%~ff"
+
 set "serviceName=NyarlathotepAgent"
 
 nssm install %serviceName% "%appPath%"

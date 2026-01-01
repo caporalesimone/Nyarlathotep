@@ -76,12 +76,63 @@ jobs:
           provenance: false
           sbom: false
 
-      - name: Create GitHub Release
-        uses: softprops/action-gh-release@v1
+  build-agent-binaries:
+    needs: build-and-push
+    strategy:
+      matrix:
+        os: [windows-latest]
+    runs-on: ${{ matrix.os }}
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
         with:
-          generate_release_notes: true
-          body: |
-            ## 📦 Container Version: ${{ steps.versions.outputs.container }}
+          python-version: '3.12'
+
+      - name: Install PyInstaller
+        run: pip install pyinstaller
+
+      - name: Create Agent binary
+        run: python nyarlathotep-agent/_create_agent_binaries.py
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: agent-binary-${{ matrix.os }}
+          path: nyarlathotep-agent/output_*/nyarlathotep-agent-*.zip
+          retention-days: 1
+
+  create-release:
+    needs: [build-and-push, build-agent-binaries]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Extract agent version
+        id: version
+        run: |
+          AGENT_VERSION=$(grep -oP 'CLIENT_SW_VERSION\s*=\s*"\K[^"]+' nyarlathotep-agent/versions.py)
+          echo "agent=$AGENT_VERSION" >> $GITHUB_OUTPUT
+
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: all-artifacts
+
+      - name: Prepare release assets
+        run: |
+          mkdir -p release-assets
+          find all-artifacts -name "*.zip" -exec cp {} release-assets/ \;
+          ls -la release-assets/
             
             ### Component Versions
             - **Frontend**: `${{ steps.versions.outputs.frontend }}`
@@ -90,7 +141,15 @@ jobs:
             
             ---
             
-            ## 🚀 Quick Start
+            ## � Agent Binaries
+            
+            Download the agent executables from the Assets section:
+            - **Windows**: `nyarlathotep-agent-win-${{ steps.versions.outputs.agent }}.zip`
+            - **Linux**: `nyarlathotep-agent-linux-${{ steps.versions.outputs.agent }}.zip`
+            
+            ---
+            
+            ## �🚀 Quick Start
             
             ### Pull the image
             ```bash

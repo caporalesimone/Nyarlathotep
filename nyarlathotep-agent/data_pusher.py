@@ -43,10 +43,13 @@ class DataPusher:
                                      data=self.last_json,
                                      headers={"Content-Type": "application/json; charset=utf-8"},
                                      timeout=10)  # Add a timeout value (e.g., 10 seconds)
+            print(f"Response status: {response.status_code}")
             if response.status_code == 200:
                 timestamp = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime())
                 print(f"{timestamp} - Data successfully sent")
             else:
                 print(f"Error sending data: HTTP ERROR {response.status_code}")
+                print(f"Response body: {response.text}")
+                print(f"JSON sent: {self.last_json}")
         except requests.exceptions.RequestException as e:
             print(f"Error sending data to server: {e}")
