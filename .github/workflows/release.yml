@@ -1,0 +1,128 @@
+name: Build and Publish Docker Image
+
+on:
+  push:
+    tags:
+      - '[0-9]+.[0-9]+.[0-9]+'  # Match semantic versions (e.g., 1.2.3)
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      packages: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Extract component versions
+        id: versions
+        run: |
+          # Extract frontend version from TypeScript file
+          FRONTEND_VERSION=$(grep -oP 'FRONTEND_VERSION\s*=\s*"\K[^"]+' nyarlathotep-frontend/src/version.ts)
+          echo "frontend=$FRONTEND_VERSION" >> $GITHUB_OUTPUT
+          
+          # Extract backend version from Python file
+          BACKEND_VERSION=$(grep -oP 'BACKEND_VERSION\s*=\s*"\K[^"]+' nyarlathotep-backend/versions.py)
+          echo "backend=$BACKEND_VERSION" >> $GITHUB_OUTPUT
+          
+          # Extract agent version from Python file
+          AGENT_VERSION=$(grep -oP 'CLIENT_SW_VERSION\s*=\s*"\K[^"]+' nyarlathotep-agent/versions.py)
+          echo "agent=$AGENT_VERSION" >> $GITHUB_OUTPUT
+          
+          # Extract container version from tag (remove 'v' prefix if present)
+          CONTAINER_VERSION=${GITHUB_REF_NAME#v}
+          echo "container=$CONTAINER_VERSION" >> $GITHUB_OUTPUT
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Extract metadata (tags, labels)
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          tags: |
+            type=semver,pattern={{version}}
+            type=raw,value=latest
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: ./Dockerfile
+          platforms: linux/amd64
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          generate_release_notes: true
+          body: |
+            ## 📦 Container Version: ${{ steps.versions.outputs.container }}
+            
+            ### Component Versions
+            - **Frontend**: `${{ steps.versions.outputs.frontend }}`
+            - **Backend**: `${{ steps.versions.outputs.backend }}`
+            - **Agent**: `${{ steps.versions.outputs.agent }}`
+            
+            ---
+            
+            ## 🚀 Quick Start
+            
+            ### Pull the image
+            ```bash
+            docker pull ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.versions.outputs.container }}
+            ```
+            
+            Or use `latest`:
+            ```bash
+            docker pull ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
+            ```
+            
+            ### Run with Docker
+            ```bash
+            docker run -d --name nyarlathotep -p 80:80 -p 443:443 ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.versions.outputs.container }}
+            ```
+            
+            ### Run with Docker Compose
+            Create a `docker-compose.yml`:
+            ```yaml
+            services:
+              nyarlathotep:
+                container_name: nyarlathotep
+                image: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.versions.outputs.container }}
+                ports:
+                  - "80:80"
+                  - "443:443"
+                restart: always
+            ```
+            
+            Then run:
+            ```bash
+            docker-compose up -d
+            ```
+            
+            ## 🌐 Access
+            
+            - **HTTP**: http://localhost
+            - **HTTPS**: https://localhost (accept self-signed certificate warning)
+
+            - HTTP: http://localhost
+            - HTTPS: https://localhost (self-signed certificate)
