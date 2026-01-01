@@ -69,6 +69,8 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
+          provenance: false
+          sbom: false
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v1
@@ -123,4 +125,4 @@ jobs:
             
             - **HTTP**: http://localhost
             - **HTTPS**: https://localhost (accept self-signed certificate warning)
-            
+
