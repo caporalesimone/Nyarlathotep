@@ -131,9 +131,27 @@ jobs:
       - name: Prepare release assets
         run: |
           mkdir -p release-assets
-          find all-artifacts -name "*.zip" -exec cp {} release-assets/ \;
+          find all-artifacts -name "*.zip" -type f -exec cp {} release-assets/ \;
           ls -la release-assets/
-            
+
+      - name: Extract component versions
+        id: versions
+        run: |
+          FRONTEND_VERSION=$(grep -oP 'FRONTEND_VERSION\s*=\s*"\K[^"]+' nyarlathotep-frontend/src/version.ts)
+          echo "frontend=$FRONTEND_VERSION" >> $GITHUB_OUTPUT
+          BACKEND_VERSION=$(grep -oP 'BACKEND_VERSION\s*=\s*"\K[^"]+' nyarlathotep-backend/versions.py)
+          echo "backend=$BACKEND_VERSION" >> $GITHUB_OUTPUT
+          AGENT_VERSION=$(grep -oP 'CLIENT_SW_VERSION\s*=\s*"\K[^"]+' nyarlathotep-agent/versions.py)
+          echo "agent=$AGENT_VERSION" >> $GITHUB_OUTPUT
+          CONTAINER_VERSION=${GITHUB_REF_NAME#v}
+          echo "container=$CONTAINER_VERSION" >> $GITHUB_OUTPUT
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: release-assets/*.zip
+          generate_release_notes: true
+          body: |
             ### Component Versions
             - **Frontend**: `${{ steps.versions.outputs.frontend }}`
             - **Backend**: `${{ steps.versions.outputs.backend }}`
