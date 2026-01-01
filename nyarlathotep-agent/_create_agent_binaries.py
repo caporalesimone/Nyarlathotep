@@ -141,7 +141,7 @@ def main():
         zip_path = create_zip(dist_dir, zip_name, output_path)
         
         print(f"\n{'='*60}")
-        print(f"✅ Successfully created {os_name.upper()} agent binary")
+        print(f"SUCCESS: Created {os_name.upper()} agent binary")
         print(f"{'='*60}")
         print(f"Version: {version}")
         print(f"Output:  {zip_path}")
@@ -149,7 +149,7 @@ def main():
         
     except Exception as e:
         print(f"\n{'='*60}")
-        print(f"❌ Error: {str(e)}")
+        print(f"ERROR: {str(e)}")
         print(f"{'='*60}")
         raise
 
